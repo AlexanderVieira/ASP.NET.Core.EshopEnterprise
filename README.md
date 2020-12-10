@@ -8,7 +8,7 @@ Tecnologias:
 - JWT;
 - EFCore;
 - RabbitMQ;
-- EasyNetMQ;
+- EasyNetQ;
 - CQRS;
 - Event Storage;
 - Docker;
