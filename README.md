@@ -1,4 +1,4 @@
-# e-shop-enterprise
+# eShopEnterprise
 Projeto E-commerce desenvolvido em dotnet core 3.1 com C#. 
 
 Arquitetura Micro Distribuida.
@@ -20,3 +20,4 @@ Tecnologias:
 - Razor Extensions;
 - WebAPI Getway BFF;
 - SOLID;
+- Dapper;
