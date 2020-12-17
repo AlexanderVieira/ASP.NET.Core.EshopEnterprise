@@ -30,7 +30,7 @@ namespace ESE.Auth.API.Controllers
             _appSettings = appSettings.Value;
         }
 
-        [HttpPost("register")]
+        [HttpPost("new-account")]
         public async Task<ActionResult> Register(UserRegister userRegister){
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -57,12 +57,17 @@ namespace ESE.Auth.API.Controllers
             return CustomResponse();
         }
 
-        [HttpPost("login")]
+        [HttpPost("authenticate")]
         public async Task<ActionResult> Login(UserLogin userLogin){
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, true);
+
+            if (result.Succeeded)
+            {
+                return CustomResponse(await GenerateJwt(userLogin.Email));
+            }
 
             if (result.IsLockedOut)
             {

@@ -29,21 +29,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6CBBFF08-5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{1CCE3905-A150-4E9A-B620-D33A72DDA5E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Core", "src\Buliding Blocks\Core\ESE.Core\ESE.Core.csproj", "{0D3098D3-3C00-48B2-9292-5F5274476066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Core", "src\Buliding Blocks\Core\ESE.Core\ESE.Core.csproj", "{0D3098D3-3C00-48B2-9292-5F5274476066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Store.MVC", "src\Presentation\Web\MVC\ESE.Store.MVC\ESE.Store.MVC.csproj", "{D5876E95-A9B7-4E5A-8497-BF1418C7DC64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Store.MVC", "src\Presentation\Web\MVC\ESE.Store.MVC\ESE.Store.MVC.csproj", "{D5876E95-A9B7-4E5A-8497-BF1418C7DC64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Auth.API", "src\Services\Auth\ESE.Auth.API\ESE.Auth.API.csproj", "{55B427EC-D408-43B7-9B9F-D8329EFDE378}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Auth.API", "src\Services\Auth\ESE.Auth.API\ESE.Auth.API.csproj", "{55B427EC-D408-43B7-9B9F-D8329EFDE378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Catalog.API", "src\Services\Catalog\ESE.Catalog.API\ESE.Catalog.API.csproj", "{AC9AD6E1-03CC-4F8B-8874-BB2BE03EFAD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Catalog.API", "src\Services\Catalog\ESE.Catalog.API\ESE.Catalog.API.csproj", "{AC9AD6E1-03CC-4F8B-8874-BB2BE03EFAD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Client.API", "src\Services\Client\ESE.Client.API\ESE.Client.API.csproj", "{6EB87CEA-943B-404C-8029-D7978373F39B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Client.API", "src\Services\Client\ESE.Client.API\ESE.Client.API.csproj", "{6EB87CEA-943B-404C-8029-D7978373F39B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Order.API", "src\Services\Order\ESE.Order.API\ESE.Order.API.csproj", "{ECB3CC63-C46C-4EC8-9DD7-E40BC5CCF192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Order.API", "src\Services\Order\ESE.Order.API\ESE.Order.API.csproj", "{ECB3CC63-C46C-4EC8-9DD7-E40BC5CCF192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Payment.API", "src\Services\Payment\ESE.Payment.API\ESE.Payment.API.csproj", "{C22385D8-D2D5-420E-9C6A-13FC807EE170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Payment.API", "src\Services\Payment\ESE.Payment.API\ESE.Payment.API.csproj", "{C22385D8-D2D5-420E-9C6A-13FC807EE170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.ShoppingCart.API", "src\Services\ShoppingCart\ESE.ShoppingCart.API\ESE.ShoppingCart.API.csproj", "{40FAACBE-39CA-4833-8C9C-9C496176D600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.ShoppingCart.API", "src\Services\ShoppingCart\ESE.ShoppingCart.API\ESE.ShoppingCart.API.csproj", "{40FAACBE-39CA-4833-8C9C-9C496176D600}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
