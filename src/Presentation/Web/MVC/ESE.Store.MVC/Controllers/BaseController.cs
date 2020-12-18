@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ESE.Store.MVC.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected bool HasResponseErros(ResponseResult response)
         {

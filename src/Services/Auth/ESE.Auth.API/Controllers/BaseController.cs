@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace ESE.Auth.API.Controllers
 {
     [ApiController]
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected ICollection<string> Errors = new List<string>();
 
@@ -19,7 +19,7 @@ namespace ESE.Auth.API.Controllers
 
             return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
-                { "Mensagens", Errors.ToArray() }
+                { "Messages", Errors.ToArray() }
             }));
             
         }

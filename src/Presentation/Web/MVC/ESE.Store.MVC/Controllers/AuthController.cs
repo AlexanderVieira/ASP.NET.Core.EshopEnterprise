@@ -57,11 +57,11 @@ namespace ESE.Store.MVC.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid) return View(userLogin);
 
-            var resposta = await _authService.Login(userLogin);
+            var response = await _authService.Login(userLogin);
 
-            if (HasResponseErros(resposta.ResponseResult)) return View(userLogin);
+            if (HasResponseErros(response.ResponseResult)) return View(userLogin);
 
-            await RealizarLogin(resposta);
+            await RealizarLogin(response);
 
             if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
 

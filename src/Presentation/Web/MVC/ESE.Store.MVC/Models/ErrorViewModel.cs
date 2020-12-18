@@ -17,7 +17,7 @@ namespace ESE.Store.MVC.Models
     }
 
     public class ResponseErrorMessages
-    {
+    {        
         public List<string> Messages { get; set; }
     }
 }

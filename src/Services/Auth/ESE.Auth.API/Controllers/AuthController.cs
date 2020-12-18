@@ -34,7 +34,7 @@ namespace ESE.Auth.API.Controllers
         public async Task<ActionResult> Register(UserRegister userRegister){
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-
+            
             var user = new IdentityUser
             {
                 UserName = userRegister.Email,
