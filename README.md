@@ -5,6 +5,8 @@ Arquitetura Micro Distribuida.
 
 Tecnologias:
 - Identity;
+- Roles;
+- Claims;
 - JWT;
 - EFCore;
 - RabbitMQ;
@@ -26,3 +28,4 @@ Tecnologias:
 - ExceptionMiddleware;
 - ViewComponets;
 - ValidationProblemDetails (RFC7807 - especificação para tratameneto de mensagens de erro em APIs);
+- Swagger (Documentação API);

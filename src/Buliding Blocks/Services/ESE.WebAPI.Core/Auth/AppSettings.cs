@@ -1,4 +1,4 @@
-namespace ESE.Auth.API.Extensions
+﻿namespace ESE.WebAPI.Core.Auth
 {
     public class AppSettings
     {
@@ -6,6 +6,5 @@ namespace ESE.Auth.API.Extensions
         public int ExpirationTime { get; set; }
         public string Emitter { get; set; }
         public string ValidIn { get; set; }
-        
     }
 }

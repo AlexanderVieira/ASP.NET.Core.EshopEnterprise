@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ESE.Auth.API.Extensions;
 using ESE.Auth.API.Models;
+using ESE.WebAPI.Core.Auth;
 
 namespace ESE.Auth.API.Controllers
 {

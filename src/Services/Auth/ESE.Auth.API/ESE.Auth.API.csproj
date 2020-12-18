@@ -31,5 +31,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Buliding Blocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
+  </ItemGroup>
+
 
 </Project>
