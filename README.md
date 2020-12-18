@@ -26,6 +26,6 @@ Tecnologias:
 - IAggregateRoot;
 - UnitOfWork;
 - ExceptionMiddleware;
-- ViewComponets;
+- ViewComponents;
 - ValidationProblemDetails (RFC7807 - especificação para tratameneto de mensagens de erro em APIs);
 - Swagger (Documentação API);
