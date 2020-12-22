@@ -29,7 +29,7 @@ namespace ESE.Catalog.API.Controllers
 
         [ClaimsAuthorize("Catalogo", "Ler")]
         [HttpGet("catalog/products/{id}")]
-        public async Task<Product> Details(Guid id)
+        public async Task<Product> ProductDetail(Guid id)
         {
             return await _productRepository.GetById(id);
         }

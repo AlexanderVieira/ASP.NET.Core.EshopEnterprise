@@ -4,6 +4,7 @@ using ESE.Store.MVC.Services;
 using ESE.Store.MVC.Services.Handlers;
 using ESE.Store.MVC.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
@@ -15,11 +16,12 @@ namespace ESE.Store.MVC.Configuration
 {
     public static class DependencyInjectionConfig
     {
-        public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
             services.AddHttpClient<IAuthService, AuthService>();
             services.AddHttpClient<ICatalogService, CatalogService>()
-                .AddHttpMessageHandler< HttpClientAuthorizationDelegatingHandler>()
+                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                 //.AddTransientHttpErrorPolicy(
                 //p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
                 .AddPolicyHandler(PollyExtensions.TryWait())
@@ -28,6 +30,18 @@ namespace ESE.Store.MVC.Configuration
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
+
+            #region Refit
+
+            //services.AddHttpClient("Refit",
+            //        options =>
+            //        {
+            //            options.BaseAddress = new Uri(configuration.GetSection("CatalogoUrl").Value);
+            //        })
+            //    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+            //    .AddTypedClient(Refit.RestService.For<ICatalogoServiceRefit>);
+
+            #endregion
         }
     }
 

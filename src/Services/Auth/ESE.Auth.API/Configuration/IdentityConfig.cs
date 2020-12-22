@@ -1,5 +1,6 @@
 using ESE.Auth.API.Data;
 using ESE.Auth.API.Extensions;
+using ESE.WebAPI.Core.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +19,10 @@ namespace ESE.Auth.API.Configuration
                 .AddRoles<IdentityRole>()
                 .AddErrorDescriber<IdentityMessagesPtBr>()
                 .AddEntityFrameworkStores<AuthDbContext>()
-                .AddDefaultTokenProviders();          
-            
+                .AddDefaultTokenProviders();
+
+            services.AddJwtConfiguration(configuration);
+
             return services;
         }      
                 
