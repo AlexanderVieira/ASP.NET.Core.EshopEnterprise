@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace ESE.Auth.API.Controllers
+namespace ESE.WebAPI.Core.Controllers
 {
     [ApiController]
     public abstract class BaseController : Controller
@@ -35,7 +36,17 @@ namespace ESE.Auth.API.Controllers
             return CustomResponse();
         }
 
-         protected bool ValidOperation()
+        protected ActionResult CustomResponse(ValidationResult validationResult)
+        {
+            foreach (var erro in validationResult.Errors)
+            {
+                AddProcessingErrors(erro.ErrorMessage);
+            }
+
+            return CustomResponse();
+        }
+
+        protected bool ValidOperation()
         {
             return !Errors.Any();
         }

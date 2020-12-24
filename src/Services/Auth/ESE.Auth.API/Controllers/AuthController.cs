@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ESE.Auth.API.Models;
 using ESE.WebAPI.Core.Auth;
+using ESE.WebAPI.Core.Controllers;
 
 namespace ESE.Auth.API.Controllers
 {
