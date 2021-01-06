@@ -19,7 +19,7 @@ namespace ESE.Client.API.Configuration
                     License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
                 });
 
-                s.AddSecurityDefinition("", new OpenApiSecurityScheme() 
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme() 
                 {
                     Description = "Insira o token JWT desta maneira: Bearer {seu token}",
                     Name = "Authorization",

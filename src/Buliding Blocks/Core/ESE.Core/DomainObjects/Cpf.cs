@@ -1,4 +1,5 @@
 ﻿using ESE.Core.DomainObjects.Exceptions;
+using ESE.Core.Properties;
 using ESE.Core.Utils;
 
 namespace ESE.Core.DomainObjects
@@ -14,7 +15,7 @@ namespace ESE.Core.DomainObjects
 
         public Cpf(string number)
         {
-            if (!CpfValid(number)) throw new DomainException("CPF inválido.");
+            if (!CpfValid(number)) throw new DomainException(Resources.MSG_ERRO_CPF_INVALIDO);
             Number = number;
         }
 

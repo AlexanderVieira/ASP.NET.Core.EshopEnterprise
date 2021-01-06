@@ -1,6 +1,7 @@
 ﻿using ESE.Catalog.API.Models;
 using ESE.Catalog.API.Models.Interfaces;
 using ESE.WebAPI.Core.Auth;
+using ESE.WebAPI.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,10 +9,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ESE.Catalog.API.Controllers
-{
-    [ApiController]
+{    
     [Authorize]
-    public class CatalogController : Controller
+    public class CatalogController : BaseController
     {
         private readonly IProductRepository _productRepository;
 

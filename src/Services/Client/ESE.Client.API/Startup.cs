@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ESE.Client.API.Configuration;
 using ESE.WebAPI.Core.Auth;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,7 +44,7 @@ namespace ESE.Client.API
 
             services.AddSwaggerConfiguration();
 
-            //services.AddMediatR(typeof(Startup));
+            services.AddMediatR(typeof(Startup));
 
             services.RegisterServices();
         }

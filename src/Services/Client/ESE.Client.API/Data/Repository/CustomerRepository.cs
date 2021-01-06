@@ -10,7 +10,7 @@ namespace ESE.Client.API.Data.Repository
     public class CustomerRepository : ICustomerRepository
     {
         private readonly CustomerContext _context;
-        public IUnitOfWork UniOfWork => _context;
+        public IUnitOfWork UnitOfWork => _context;
         public CustomerRepository(CustomerContext context)
         {
             _context = context;

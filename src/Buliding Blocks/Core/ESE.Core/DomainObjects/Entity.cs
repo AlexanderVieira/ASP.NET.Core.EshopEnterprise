@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ESE.Core.Messages;
+using System;
+using System.Collections.Generic;
 
 namespace ESE.Core.DomainObjects
 {
@@ -6,6 +8,29 @@ namespace ESE.Core.DomainObjects
     {
         public Guid Id { get; set; }
 
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        private List<Event> _notifications;
+        public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
+
+        public void AddEvent(Event myEvent)
+        {
+            _notifications = _notifications ?? new List<Event>();
+            _notifications.Add(myEvent);
+        }
+
+        public void RemoveEvent(Event myEvent)
+        {
+            _notifications?.Remove(myEvent);
+        }
+
+        public void ClearEvent()
+        {
+            _notifications?.Clear();
+        }
         public static bool operator ==(Entity a, Entity b)
         {
             if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
