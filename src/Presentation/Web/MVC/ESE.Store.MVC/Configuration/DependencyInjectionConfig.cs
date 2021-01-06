@@ -1,9 +1,11 @@
 ﻿using ESE.Store.MVC.Extensions;
+using ESE.Store.MVC.Extensions.CpfAnnotations;
 using ESE.Store.MVC.Extensions.Interfaces;
 using ESE.Store.MVC.Services;
 using ESE.Store.MVC.Services.Handlers;
 using ESE.Store.MVC.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
@@ -18,6 +20,7 @@ namespace ESE.Store.MVC.Configuration
     {
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeAdapterProvider>();
             services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
             services.AddHttpClient<IAuthService, AuthService>();
             services.AddHttpClient<ICatalogService, CatalogService>()
