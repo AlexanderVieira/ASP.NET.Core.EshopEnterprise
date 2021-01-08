@@ -5,6 +5,12 @@ namespace ESE.Auth.API.Models
 {
     public class UserRegister
     {
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]        
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]        
+        public string Cpf { get; set; }
+
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
         public string Email { get; set; }

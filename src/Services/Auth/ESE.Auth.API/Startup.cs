@@ -30,7 +30,8 @@ namespace ESE.Auth.API
         {
             services.AddSwaggerConfiguration();            
             services.AddIdentityConfiguration(Configuration);
-            services.AddApiConfiguration();            
+            services.AddApiConfiguration();
+            services.AddMessageBusConfiguration(Configuration);
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
