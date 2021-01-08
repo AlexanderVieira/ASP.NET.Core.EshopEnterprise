@@ -23,10 +23,10 @@ namespace ESE.Core.DomainObjects
         {
             cpf = cpf.OnlyNumbers(cpf);
             
-            if (cpf.Length > 11) return false;
+            if (cpf.Length != 11) return false;
 
-            while (cpf.Length != 11)
-                cpf = '0' + cpf;
+            //while (cpf.Length != 11)
+            //    cpf = '0' + cpf;
 
             var igual = true;
             for (var i = 1; i < 11 && igual; i++)

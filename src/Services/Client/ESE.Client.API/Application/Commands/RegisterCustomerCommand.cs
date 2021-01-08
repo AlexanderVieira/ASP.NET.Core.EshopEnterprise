@@ -1,9 +1,6 @@
 ﻿using ESE.Client.API.Application.Validations;
 using ESE.Core.Messages;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ESE.Client.API.Application.Commands
 {
