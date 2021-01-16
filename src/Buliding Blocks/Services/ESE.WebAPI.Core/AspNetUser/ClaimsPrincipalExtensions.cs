@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 
-namespace ESE.Store.MVC.Extensions
+namespace ESE.WebAPI.Core.AspNetUser
 {
     public static class ClaimsPrincipalExtensions
     {

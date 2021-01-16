@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ESE.WebAPI.Core.AspNetUser.Interfaces;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using ESE.Store.MVC.Extensions.Interfaces;
 
-namespace ESE.Store.MVC.Extensions
+namespace ESE.WebAPI.Core.AspNetUser
 {
-    public class AspNetUser : IUser
+    public class AspNetUser : IAspNetUser
     {
         private readonly IHttpContextAccessor _accessor;
 

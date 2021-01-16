@@ -1,6 +1,6 @@
-﻿@using ESE.Store.MVC.Extensions.Interfaces
+﻿@using ESE.WebAPI.Core.AspNetUser.Interfaces;
 @using ESE.Store.MVC.Extensions;
-@inject IUser AppUser
+@inject IAspNetUser AppUser
 
 @if (AppUser.IsAuthenticated())
 {

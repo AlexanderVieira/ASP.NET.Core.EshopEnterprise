@@ -1,9 +1,9 @@
-﻿using ESE.Store.MVC.Extensions;
-using ESE.Store.MVC.Extensions.CpfAnnotations;
-using ESE.Store.MVC.Extensions.Interfaces;
+﻿using ESE.Store.MVC.Extensions.CpfAnnotations;
 using ESE.Store.MVC.Services;
 using ESE.Store.MVC.Services.Handlers;
 using ESE.Store.MVC.Services.Interfaces;
+using ESE.WebAPI.Core.AspNetUser;
+using ESE.WebAPI.Core.AspNetUser.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +32,7 @@ namespace ESE.Store.MVC.Configuration
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IUser, AspNetUser>();
+            services.AddScoped<IAspNetUser, AspNetUser>();
 
             #region Refit
 

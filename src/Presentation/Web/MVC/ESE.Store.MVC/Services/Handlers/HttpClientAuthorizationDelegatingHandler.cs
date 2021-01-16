@@ -1,4 +1,4 @@
-﻿using ESE.Store.MVC.Extensions.Interfaces;
+﻿using ESE.WebAPI.Core.AspNetUser.Interfaces;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,9 +9,9 @@ namespace ESE.Store.MVC.Services.Handlers
 {
     public class HttpClientAuthorizationDelegatingHandler : DelegatingHandler
     {
-        private readonly IUser _user;
+        private readonly IAspNetUser _user;
 
-        public HttpClientAuthorizationDelegatingHandler(IUser user)
+        public HttpClientAuthorizationDelegatingHandler(IAspNetUser user)
         {
             _user = user;
         }
