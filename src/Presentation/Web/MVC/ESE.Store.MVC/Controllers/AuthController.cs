@@ -35,7 +35,7 @@ namespace ESE.Store.MVC.Controllers
 
             var response = await _authService.Register(userRegister);
 
-            if (HasResponseErros(response.ResponseResult)) return View(userRegister);
+            if (HasResponseErrors(response.ResponseResult)) return View(userRegister);
 
             await RealizarLogin(response);
 
@@ -59,7 +59,7 @@ namespace ESE.Store.MVC.Controllers
 
             var response = await _authService.Login(userLogin);
 
-            if (HasResponseErros(response.ResponseResult)) return View(userLogin);
+            if (HasResponseErrors(response.ResponseResult)) return View(userLogin);
 
             await RealizarLogin(response);
 

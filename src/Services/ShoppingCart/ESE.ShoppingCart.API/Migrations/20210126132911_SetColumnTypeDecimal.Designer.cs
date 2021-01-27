@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESE.ShoppingCart.API.Migrations
 {
     [DbContext(typeof(ShoppingCartContext))]
-    [Migration("20210115220918_Inicial")]
-    partial class Inicial
+    [Migration("20210126132911_SetColumnTypeDecimal")]
+    partial class SetColumnTypeDecimal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

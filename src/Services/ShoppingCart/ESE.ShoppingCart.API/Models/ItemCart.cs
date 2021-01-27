@@ -1,5 +1,6 @@
 ﻿using ESE.ShoppingCart.API.Validations;
 using System;
+using System.Text.Json.Serialization;
 
 namespace ESE.ShoppingCart.API.Models
 {
@@ -12,6 +13,8 @@ namespace ESE.ShoppingCart.API.Models
         public decimal Value { get; set; }
         public string Image { get; set; }
         public Guid CustomerCartId { get; set; }
+
+        [JsonIgnore]
         public CustomerCart CustomerCart { get; set; }
 
         public ItemCart()

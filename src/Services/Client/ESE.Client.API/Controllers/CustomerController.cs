@@ -20,7 +20,7 @@ namespace ESE.Client.API.Controllers
         public async Task<IActionResult> Index()
         {
             var result = await _mediatorHandler.SendCommand(
-                new RegisterCustomerCommand(Guid.NewGuid(), "Alexander Silva", "alexander.silva@teste.com", "09600768080"));
+                new RegisterCustomerCommand(Guid.NewGuid(), "Usuário Teste", "user@teste.com", "18706620086"));
             return CustomResponse(result);
         }
     }

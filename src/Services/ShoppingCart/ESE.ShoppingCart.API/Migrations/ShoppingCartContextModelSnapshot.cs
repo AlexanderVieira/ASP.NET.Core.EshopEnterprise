@@ -73,7 +73,7 @@ namespace ESE.ShoppingCart.API.Migrations
             modelBuilder.Entity("ESE.ShoppingCart.API.Models.ItemCart", b =>
                 {
                     b.HasOne("ESE.ShoppingCart.API.Models.CustomerCart", "CustomerCart")
-                        .WithMany("Itens")
+                        .WithMany("Items")
                         .HasForeignKey("CustomerCartId")
                         .IsRequired();
                 });

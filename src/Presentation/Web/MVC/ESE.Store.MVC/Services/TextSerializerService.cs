@@ -1,4 +1,5 @@
 ﻿using ESE.Store.MVC.Extensions;
+using ESE.Store.MVC.Models;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -26,7 +27,7 @@ namespace ESE.Store.MVC.Services
             return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);
         }
 
-        protected bool HandlerErrosResponse(HttpResponseMessage response)
+        protected bool HandlerResponseErrors(HttpResponseMessage response)
         {
             switch ((int)response.StatusCode)
             {
@@ -42,6 +43,11 @@ namespace ESE.Store.MVC.Services
 
             response.EnsureSuccessStatusCode();
             return true;
+        }
+
+        protected ResponseResult ReturnOk()
+        {
+            return new ResponseResult();
         }
     }
 }

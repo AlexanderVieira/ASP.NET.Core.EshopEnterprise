@@ -23,12 +23,12 @@
                                     <img src="~/images/produtos/@product.Image" alt="@product.Name">
                                 </a>
                                 <figcaption class="info-wrap">
-                                    <a asp-controller="Catalog" asp-action="Detail" asp-route-id="@product.Id" class="title">
+                                    <a asp-controller="Catalog" asp-action="ProductDetail" asp-route-id="@product.Id" class="title">
                                         <b> @product.Name</b>
                                     </a>
 
                                     <small class="card-text">
-                                        @this.MensagemEstoque(product.StockQuantity)<br /><br />
+                                        @this.StockMessage(product.StockQuantity)<br /><br />
                                         @product.Description
                                     </small>
                                 </figcaption>

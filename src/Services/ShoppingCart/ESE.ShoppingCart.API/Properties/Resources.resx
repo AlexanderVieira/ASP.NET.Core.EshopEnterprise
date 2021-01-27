@@ -121,7 +121,7 @@
     <value>5</value>
   </data>
   <data name="MSG_ERROR_CART_EMPTY" xml:space="preserve">
-    <value>O carrinho não possui itens.</value>
+    <value>O carrinho não possui Items.</value>
   </data>
   <data name="MSG_ERROR_CUSTOMER_UNKNOWN" xml:space="preserve">
     <value>Cliente não reconhecido.</value>

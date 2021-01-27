@@ -70,7 +70,7 @@ namespace ESE.ShoppingCart.API.Properties {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O carrinho não possui itens..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O carrinho não possui Items..
         /// </summary>
         internal static string MSG_ERROR_CART_EMPTY {
             get {

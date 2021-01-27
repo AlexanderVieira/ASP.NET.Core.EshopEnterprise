@@ -29,9 +29,17 @@ namespace ESE.ShoppingCart.API.Data
                 .HasName("IDX_Customer");
 
             modelBuilder.Entity<CustomerCart>()
-                .HasMany(c => c.Itens)
+                .Property(c => c.TotalValue)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<CustomerCart>()
+                .HasMany(c => c.Items)
                 .WithOne(i => i.CustomerCart)
                 .HasForeignKey(c => c.CustomerCartId);
+
+            modelBuilder.Entity<ItemCart>()
+                .Property(c => c.Value)
+                .HasColumnType("decimal(18,2)");
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys())) 

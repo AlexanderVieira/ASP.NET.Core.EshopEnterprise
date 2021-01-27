@@ -24,9 +24,27 @@ namespace ESE.Store.MVC.Extensions
             return valor > 0 ? string.Format(Thread.CurrentThread.CurrentCulture, "{0:C}", valor) : "Gratuito";
         }
 
-        public static string MensagemEstoque(this RazorPage page, int quantidade)
+        public static string StockMessage(this RazorPage page, int quantidade)
         {
             return quantidade > 0 ? $"Apenas {quantidade} em estoque!" : "Produto esgotado!";
+        }
+
+        public static string UnitsByProduct(this RazorPage page, int units)
+        {
+            return units > 1 ? $"{units} units" : $"{units} unidade";
+        }
+
+        public static string SelectOptionsByQuantity(this RazorPage page, int quantity, int selectedValue = 0)
+        {
+            var sb = new StringBuilder();
+            for (var i = 1; i <= quantity; i++)
+            {
+                var selected = "";
+                if (i == selectedValue) selected = "selected";
+                sb.Append($"<option {selected} value='{i}'>{i}</option>");
+            }
+
+            return sb.ToString();
         }
     }
 }

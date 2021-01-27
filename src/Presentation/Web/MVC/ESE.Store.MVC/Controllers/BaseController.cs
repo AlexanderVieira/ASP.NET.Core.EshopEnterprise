@@ -6,7 +6,7 @@ namespace ESE.Store.MVC.Controllers
 {
     public abstract class BaseController : Controller
     {
-        protected bool HasResponseErros(ResponseResult response)
+        protected bool HasResponseErrors(ResponseResult response)
         {
             if (response != null && response.Errors.Messages.Any())
             {
@@ -19,6 +19,16 @@ namespace ESE.Store.MVC.Controllers
             }
 
             return false;
+        }
+
+        protected void AddValidationError(string mensagem)
+        {
+            ModelState.AddModelError(string.Empty, mensagem);
+        }
+
+        protected bool ValidOperation()
+        {
+            return ModelState.ErrorCount == 0;
         }
     }
 }

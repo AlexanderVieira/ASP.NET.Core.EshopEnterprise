@@ -23,7 +23,7 @@ namespace ESE.Store.MVC.Services
         {
             var response = await _httpClient.GetAsync("/catalog/products/");
 
-            HandlerErrosResponse(response);
+            HandlerResponseErrors(response);
 
             return await DeserializeResponseObject<IEnumerable<ProductViewModel>>(response);
         }
@@ -32,7 +32,7 @@ namespace ESE.Store.MVC.Services
         {
             var response = await _httpClient.GetAsync($"/catalog/products/{id}");
 
-            HandlerErrosResponse(response);
+            HandlerResponseErrors(response);
 
             return await DeserializeResponseObject<ProductViewModel>(response);
         }

@@ -24,7 +24,7 @@ namespace ESE.Store.MVC.Services
 
             var response = await _httpClient.PostAsync("/api/auth/authenticate", loginContent);
 
-            if (!HandlerErrosResponse(response))
+            if (!HandlerResponseErrors(response))
             {
                 return new UserResponseLogin
                 {
@@ -41,7 +41,7 @@ namespace ESE.Store.MVC.Services
 
             var response = await _httpClient.PostAsync("/api/auth/new-account", registerContent);
 
-            if (!HandlerErrosResponse(response))
+            if (!HandlerResponseErrors(response))
             {
                 return new UserResponseLogin
                 {
