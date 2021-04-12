@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using ESE.Core.Comunication;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ESE.Porchase.API.Services
 {
-    public class TextSerializerService
+    public abstract class TextSerializerService
     {
         protected StringContent GetContent(object obj)
         {
@@ -33,6 +34,11 @@ namespace ESE.Porchase.API.Services
             response.EnsureSuccessStatusCode();
             return true;
         }
-        
+
+        protected ResponseResult ReturnOk()
+        {
+            return new ResponseResult();
+        }
+
     }
 }
