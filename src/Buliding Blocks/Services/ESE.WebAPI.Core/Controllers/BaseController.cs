@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ESE.Core.Comunication;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -44,6 +45,25 @@ namespace ESE.WebAPI.Core.Controllers
             }
 
             return CustomResponse();
+        }
+
+        protected ActionResult CustomResponse(ResponseResult response)
+        {
+            ResponseHasErrors(response);
+
+            return CustomResponse();
+        }
+
+        protected bool ResponseHasErrors(ResponseResult response)
+        {
+            if (response == null || !response.Errors.Mensagens.Any()) return false;
+
+            foreach (var message in response.Errors.Mensagens)
+            {
+                AddProcessingErrors(message);
+            }
+
+            return true;
         }
 
         protected bool ValidOperation()
