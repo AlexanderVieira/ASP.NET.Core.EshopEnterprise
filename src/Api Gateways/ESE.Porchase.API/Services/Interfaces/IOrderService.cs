@@ -10,7 +10,6 @@ namespace ESE.Porchase.API.Services.Interfaces
         Task<ResponseResult> Checkout(OrderDTO order);
         Task<OrderDTO> GetLastOrder();
         Task<IEnumerable<OrderDTO>> GetListByClientId();
-
         Task<VoucherDTO> GetVoucherByCode(string code);
     }
 }
