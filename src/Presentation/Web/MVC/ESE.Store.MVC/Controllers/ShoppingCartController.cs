@@ -9,94 +9,68 @@ namespace ESE.Store.MVC.Controllers
 { 
     public class ShoppingCartController : BaseController
     {
-        private readonly ICustomerCartService _cartService;
-        private readonly ICatalogService _catalogService;
+        private readonly IPorchasesBffService _porchasesBffService;        
 
-        public ShoppingCartController(ICustomerCartService cartService, ICatalogService catalogService)
+        public ShoppingCartController(IPorchasesBffService porchasesBffService)
         {
-            _cartService = cartService;
-            _catalogService = catalogService;
+            _porchasesBffService = porchasesBffService;            
         }
 
         [HttpGet]
         [Route("cart")]
         public async Task<IActionResult> Index()
         {
-            return View(await _cartService.GetCustomerCart());
+            return View(await _porchasesBffService.GetCustomerCart());
         }
 
         [HttpPost]
         [Route("cart/add-item")]
         public async Task<IActionResult> AddItemCart(ItemCartViewModel item) 
         {
-            var product = await _catalogService.GetById(item.ProductId);
-            ItemCartValid(product, item.Quantity);
-            if (!ValidOperation())
-            {
-                return View("Index", await _cartService.GetCustomerCart());
-            }
-
-            item.Name = product.Name;
-            item.Value = product.Value;
-            item.Image = product.Image;
-
-            var response = await _cartService.AddItemCart(item);
-
+            var response = await _porchasesBffService.AddItemCart(item);
             if (HasResponseErrors(response))
             {
-                return View("Index", await _cartService.GetCustomerCart());
+                return View("Index", await _porchasesBffService.GetCustomerCart());
             }
-
             return RedirectToAction("Index");
         }
 
         [HttpPut]
         [Route("cart/update-item")]
         public async Task<IActionResult> UpdateItemCart(Guid productId, int quantity)
-        {
-            var product = await _catalogService.GetById(productId);
-            ItemCartValid(product, quantity);
-            if (!ValidOperation())
-            {
-                return View("Index", await _cartService.GetCustomerCart());
-            }
-
+        {            
             var item = new ItemCartViewModel { ProductId = productId, Quantity = quantity };
-            var response = await _cartService.UpdateItemCart(productId, item);
-
+            var response = await _porchasesBffService.UpdateItemCart(productId, item);
             if (HasResponseErrors(response))
             {
-                return View("Index", await _cartService.GetCustomerCart());
+                return View("Index", await _porchasesBffService.GetCustomerCart());
             }
-
             return RedirectToAction("Index");
         }
 
         [HttpDelete]
         [Route("cart/remove-item")]
         public async Task<IActionResult> RemoveItemCart(Guid productId)
-        {
-            var product = await _catalogService.GetById(productId);
-            if (product == null)
-            {
-                AddValidationError("Produto inexistente.");
-                return View("Index", await _cartService.GetCustomerCart());
-            }
-
-            var response = await _cartService.RemoveItemCart(productId);
+        {           
+            var response = await _porchasesBffService.RemoveItemCart(productId);
             if (HasResponseErrors(response))
             {
-                return View("Index", await _cartService.GetCustomerCart());
+                return View("Index", await _porchasesBffService.GetCustomerCart());
             }
-
             return RedirectToAction("Index");
         }
 
-        private void ItemCartValid(ProductViewModel product, int quantity)
+        [HttpPost]
+        [Route("cart/apply-voucher")]
+        public async Task<IActionResult> ApplyVoucher(string voucherCode)
         {
-            if (product == null) AddValidationError("Produto inexistente.");
-            if (quantity < 1) AddValidationError($"Escolha ao menos uma unidade do produto {product.Name}.");
-            if (quantity > product.StockQuantity) AddValidationError($"O produto {product.Name} possui {product.StockQuantity} unidades em estoque.");            
+            var response = await _porchasesBffService.ApplyVoucherCustomerCart(voucherCode);
+            if (HasResponseErrors(response))
+            {
+                return View("Index", await _porchasesBffService.GetCustomerCart());
+            }
+            return RedirectToAction("Index");
         }
+
     }
 }

@@ -31,7 +31,7 @@ namespace ESE.Porchase.API.Controllers
         }
         
         [HttpPost]
-        [Route("porchases/Order")]
+        [Route("porchases/order")]
         public async Task<IActionResult> AddOrder(OrderDTO order)
         {
             var customerCart = await _customerCartService.GetCustomerCart();
@@ -42,8 +42,8 @@ namespace ESE.Porchase.API.Controllers
             return CustomResponse(await _orderService.Checkout(order));
         }
 
-        [HttpPut]
-        [Route("porchases/Order/last")]
+        [HttpGet]
+        [Route("porchases/order/last")]
         public async Task<IActionResult> LastOrder()
         {
             var order = await _orderService.GetLastOrder();
@@ -55,8 +55,8 @@ namespace ESE.Porchase.API.Controllers
             return CustomResponse(order);
         }
 
-        [HttpDelete]
-        [Route("porchases/Order/list-client")]
+        [HttpGet]
+        [Route("porchases/order/list-client")]
         public async Task<IActionResult> ListByCustomer()
         {
             var orders = await _orderService.GetListByClientId();

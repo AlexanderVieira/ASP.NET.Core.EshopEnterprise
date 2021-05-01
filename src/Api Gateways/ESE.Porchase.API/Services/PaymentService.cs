@@ -13,7 +13,7 @@ namespace ESE.Porchase.API.Services
         public PaymentService(HttpClient httpClient, IOptions<AppSettings> settings)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.OrderUrl);
+            _httpClient.BaseAddress = new Uri(settings.Value.PaymentUrl);
         }
         
     }

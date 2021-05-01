@@ -7,16 +7,16 @@ namespace ESE.Store.MVC.Extensions
 {
     public class CustomerCartViewComponent : ViewComponent
     {
-        private readonly ICustomerCartService _cartService;
+        private readonly IPorchasesBffService _porchasesBffService;
 
-        public CustomerCartViewComponent(ICustomerCartService cartService)
+        public CustomerCartViewComponent(IPorchasesBffService porchasesBffService)
         {
-            _cartService = cartService;
+            _porchasesBffService = porchasesBffService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(await _cartService.GetCustomerCart() ?? new CustomerCartViewModel());
+            return View(await _porchasesBffService.GetQuantityCustomerCart());
         }
     }
 }

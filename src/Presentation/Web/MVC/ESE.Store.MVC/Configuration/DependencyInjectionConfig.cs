@@ -40,7 +40,7 @@ namespace ESE.Store.MVC.Configuration
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-            services.AddHttpClient<ICustomerCartService, CustomerCartService>()
+            services.AddHttpClient<IPorchasesBffService, PorchasesBffService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                 .AddPolicyHandler(PollyExtensions.TryWait())
                 .AddTransientHttpErrorPolicy(

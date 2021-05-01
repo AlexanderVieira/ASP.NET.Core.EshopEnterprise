@@ -4,6 +4,7 @@ using ESE.Core.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ESE.Catalog.API.Data.Repository
@@ -21,6 +22,14 @@ namespace ESE.Catalog.API.Data.Repository
         public async Task<IEnumerable<Product>> GetAll()
         {
             return await _ctx.Products.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<Product>> GetProductsById(string ids)
+        {
+            var identifiers = ids.Split(',').Select(id => (Ok: Guid.TryParse(id, out var x), Value: x));
+            if (!identifiers.All(nid => nid.Ok)) return new List<Product>();
+            var identifiersValue = identifiers.Select(id => id.Value);
+            return await _ctx.Products.AsNoTracking().Where(p => identifiersValue.Contains(p.Id) && p.Active).ToListAsync();
         }
 
         public async Task<Product> GetById(Guid id)
@@ -42,5 +51,6 @@ namespace ESE.Catalog.API.Data.Repository
         {
             _ctx?.Dispose();
         }
+        
     }
 }
