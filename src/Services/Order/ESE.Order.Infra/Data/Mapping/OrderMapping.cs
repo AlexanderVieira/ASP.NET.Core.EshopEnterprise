@@ -33,6 +33,12 @@ namespace ESE.Order.Infra.Data.Mapping
                     .HasColumnName("Estado");
             });
 
+            builder.Property(c => c.Discount)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(c => c.TotalValue)
+                .HasColumnType("decimal(18,2)");
+
             builder.Property(c => c.Code)
                 .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
 

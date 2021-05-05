@@ -14,6 +14,12 @@ namespace ESE.Order.Infra.Data.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
+            builder.Property(c => c.Percentage)                
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(c => c.TotalDiscount)
+                .HasColumnType("decimal(18,2)");
+
             builder.ToTable("Vouchers");
         }
     }

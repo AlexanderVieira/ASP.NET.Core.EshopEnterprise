@@ -14,6 +14,9 @@ namespace ESE.Order.Infra.Data.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(250)");
 
+            builder.Property(c => c.UnitValue)
+                .HasColumnType("decimal(18,2)");
+
             // 1 : N => Pedido : Pagamento
             builder.HasOne(c => c.Order)
                 .WithMany(c => c.OrderItems);

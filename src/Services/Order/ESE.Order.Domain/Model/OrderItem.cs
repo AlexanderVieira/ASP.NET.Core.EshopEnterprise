@@ -13,20 +13,17 @@ namespace ESE.Order.Domain.Model
         public int Quantity { get; private set; }
         public Order Order { get; set; }
 
-        public OrderItem(Guid orderId, Guid productId, string productName, 
-                         decimal unitValue, int quantity, string productImage = null)
-        {
-            OrderId = orderId;
+        public OrderItem(Guid productId, string productName, int quantity, decimal unitValue, string productImage = null)
+        {            
             ProductId = productId;
             ProductName = productName;
-            UnitValue = unitValue;
-            ProductImage = productImage;
             Quantity = quantity;
+            UnitValue = unitValue;
+            ProductImage = productImage;            
         }
 
         protected OrderItem()
         {
-
         }
 
         internal decimal CalculateValue()
