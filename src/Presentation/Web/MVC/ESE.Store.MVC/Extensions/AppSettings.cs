@@ -4,5 +4,7 @@
     {
         public string AuthUrl { get; set; }
         public string CatalogUrl { get; set; }
+        public string ClientUrl { get; set; }
+        public string PorchaseBffUrl { get; set; }
     }
 }

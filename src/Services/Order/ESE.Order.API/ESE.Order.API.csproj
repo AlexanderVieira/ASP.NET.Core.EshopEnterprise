@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -8,11 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="dapper" Version="2.0.35" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />   
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Application\Commands\" />
+    <Folder Include="Application\Events\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Buliding Blocks\Core\ESE.Core\ESE.Core.csproj" />
+    <ProjectReference Include="..\..\..\Buliding Blocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj" />
+    <ProjectReference Include="..\..\..\Buliding Blocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\ESE.Order.Domain\ESE.Order.Domain.csproj" />
+    <ProjectReference Include="..\ESE.Order.Infra\ESE.Order.Infra.csproj" />
   </ItemGroup>
 
 

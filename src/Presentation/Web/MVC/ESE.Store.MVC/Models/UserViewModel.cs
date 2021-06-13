@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ESE.Store.MVC.Extensions.CpfAnnotations;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,9 +8,20 @@ namespace ESE.Store.MVC.Models
     public class UserRegister
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [DisplayName("Nome Completo")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [DisplayName("CPF")]
+        [Cpf]
+        public string Cpf { get; set; }
+
+        [DisplayName("E-mail")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
         public string Email { get; set; }
 
+        [DisplayName("Senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
         public string Password { get; set; }
@@ -21,10 +33,12 @@ namespace ESE.Store.MVC.Models
 
     public class UserLogin
     {
+        [DisplayName("E-mail")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
         public string Email { get; set; }
 
+        [DisplayName("Senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
         public string Password { get; set; }

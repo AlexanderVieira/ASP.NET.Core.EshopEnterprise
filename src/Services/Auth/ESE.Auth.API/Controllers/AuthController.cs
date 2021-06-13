@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ESE.Auth.API.Extensions;
 using ESE.Auth.API.Models;
+using ESE.WebAPI.Core.Auth;
+using ESE.WebAPI.Core.Controllers;
+using ESE.Core.Messages.Integration;
+using ESE.MessageBus.Interfaces;
 
 namespace ESE.Auth.API.Controllers
 {
@@ -20,14 +23,17 @@ namespace ESE.Auth.API.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly IMessageBus _bus;
 
          public AuthController(SignInManager<IdentityUser> signInManager, 
                               UserManager<IdentityUser> userManager,
-                              IOptions<AppSettings> appSettings)
+                              IOptions<AppSettings> appSettings,
+                              IMessageBus bus)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
+            _bus = bus;
         }
 
         [HttpPost("new-account")]
@@ -46,6 +52,12 @@ namespace ESE.Auth.API.Controllers
 
             if (result.Succeeded)
             {
+                var customerResult = await CustomerRecord(userRegister);
+                if (!customerResult.ValidationResult.IsValid)
+                {
+                    await _userManager.DeleteAsync(user);
+                    return CustomResponse(customerResult.ValidationResult);
+                }
                 return CustomResponse(await GenerateJwt(userRegister.Email));
             }
 
@@ -55,7 +67,7 @@ namespace ESE.Auth.API.Controllers
             }
 
             return CustomResponse();
-        }
+        }        
 
         [HttpPost("authenticate")]
         public async Task<ActionResult> Login(UserLogin userLogin){
@@ -113,7 +125,7 @@ namespace ESE.Auth.API.Controllers
         private string EncodeToken(ClaimsIdentity identityClaims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);            
             var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = _appSettings.Emitter,
@@ -143,5 +155,20 @@ namespace ESE.Auth.API.Controllers
 
         private static long ToUnixEpochDate(DateTime date)
             => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
+
+        private async Task<ResponseMessage> CustomerRecord(UserRegister userRegister)
+        {
+            var user = await _userManager.FindByEmailAsync(userRegister.Email);
+            var registeredUser = new RegisteredUserIntegrationEvent(Guid.Parse(user.Id), userRegister.Name, userRegister.Email, userRegister.Cpf);
+            try
+            {
+                return await _bus.RequestAsync<RegisteredUserIntegrationEvent, ResponseMessage>(registeredUser);
+            }
+            catch
+            {
+                await _userManager.DeleteAsync(user);
+                throw;
+            }
+        }
     }
 }

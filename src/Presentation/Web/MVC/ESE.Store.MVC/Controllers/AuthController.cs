@@ -35,11 +35,11 @@ namespace ESE.Store.MVC.Controllers
 
             var response = await _authService.Register(userRegister);
 
-            if (HasResponseErros(response.ResponseResult)) return View(userRegister);
+            if (HasResponseErrors(response.ResponseResult)) return View(userRegister);
 
             await RealizarLogin(response);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Catalog");
         }
 
         [HttpGet]
@@ -59,11 +59,11 @@ namespace ESE.Store.MVC.Controllers
 
             var response = await _authService.Login(userLogin);
 
-            if (HasResponseErros(response.ResponseResult)) return View(userLogin);
+            if (HasResponseErrors(response.ResponseResult)) return View(userLogin);
 
             await RealizarLogin(response);
 
-            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
+            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Catalog");
 
             return LocalRedirect(returnUrl);
         }
@@ -73,7 +73,7 @@ namespace ESE.Store.MVC.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Catalog");
         }
 
         private async Task RealizarLogin(UserResponseLogin response)
