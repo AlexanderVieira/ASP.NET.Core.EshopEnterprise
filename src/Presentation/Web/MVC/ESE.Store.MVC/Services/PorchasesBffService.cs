@@ -16,7 +16,7 @@ namespace ESE.Store.MVC.Services
         public PorchasesBffService(HttpClient httpClient, IOptions<AppSettings> settings)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.PorchaseBffUrl);
+            _httpClient.BaseAddress = new Uri(settings.Value.PorchasesBffUrl);
         }
 
         #region CustomerCart
@@ -37,7 +37,7 @@ namespace ESE.Store.MVC.Services
         public async Task<ResponseResult> AddItemCart(ItemCartViewModel item)
         {
             var itemContent = GetContent(item);
-            var response = await _httpClient.PostAsync("/porchases/cart/", itemContent);
+            var response = await _httpClient.PostAsync("/porchases/cart/items", itemContent);
             if (!HandlerResponseErrors(response))
             {
                 return await DeserializeResponseObject<ResponseResult>(response);
@@ -48,7 +48,7 @@ namespace ESE.Store.MVC.Services
 
         public async Task<ResponseResult> RemoveItemCart(Guid productId)
         {
-            var response = await _httpClient.DeleteAsync($"/porchases/cart/{productId}");
+            var response = await _httpClient.DeleteAsync($"/porchases/cart/items/{productId}");
             if (!HandlerResponseErrors(response))
             {
                 return await DeserializeResponseObject<ResponseResult>(response);
@@ -60,7 +60,7 @@ namespace ESE.Store.MVC.Services
         public async Task<ResponseResult> UpdateItemCart(Guid productId, ItemCartViewModel item)
         {
             var itemContent = GetContent(item);
-            var response = await _httpClient.PutAsync($"/porchases/cart/{item.ProductId}", itemContent);
+            var response = await _httpClient.PutAsync($"/porchases/cart/items/{item.ProductId}", itemContent);
             if (!HandlerResponseErrors(response))
             {
                 return await DeserializeResponseObject<ResponseResult>(response);

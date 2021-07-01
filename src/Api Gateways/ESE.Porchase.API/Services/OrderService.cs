@@ -16,9 +16,9 @@ namespace ESE.Porchase.API.Services
         private readonly HttpClient _httpClient;
 
         public OrderService(HttpClient httpClient, IOptions<AppSettings> settings)
-        {
+        {            
+            httpClient.BaseAddress = new Uri("https://localhost:44384");
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.OrderUrl);            
         }
 
         public async Task<ResponseResult> Checkout(OrderDTO order)

@@ -18,7 +18,7 @@ namespace ESE.Order.API.Application.DTO
         public decimal Discount { get; set; }
         public string VoucherCode { get; set; }
         public bool VoucherUsed { get; set; }
-        public List<ItemCartDTO> OrderItems { get; set; }
+        public List<OrderItemtDTO> OrderItems { get; set; }
         public AddressDTO Address { get; set; }       
 
         public static OrderDTO ToOrderDTO(Domain.Model.Order order)
@@ -32,13 +32,13 @@ namespace ESE.Order.API.Application.DTO
                 TotalValue = order.TotalValue,
                 Discount = order.Discount,
                 VoucherUsed = order.VoucherUsed,
-                OrderItems = new List<ItemCartDTO>(),
+                OrderItems = new List<OrderItemtDTO>(),
                 Address = new AddressDTO()                
             };
 
             foreach (var item in order.OrderItems)
             {
-                orderDTO.OrderItems.Add(new ItemCartDTO 
+                orderDTO.OrderItems.Add(new OrderItemtDTO 
                 {
                     ProductId = item.ProductId,
                     OrderId = item.OrderId,

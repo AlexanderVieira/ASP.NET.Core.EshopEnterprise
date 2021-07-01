@@ -14,9 +14,9 @@ namespace ESE.Porchase.API.Services
         private readonly HttpClient _httpClient;
 
         public CustomerCartService(HttpClient httpClient, IOptions<AppSettings> settings)
-        {
+        {            
+            httpClient.BaseAddress = new Uri("https://localhost:44339");
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.ShoppingCartUrl);
         }
 
         public async Task<CustomerCartDTO> GetCustomerCart()

@@ -3,7 +3,7 @@ using System;
 
 namespace ESE.Order.API.Application.DTO
 {
-    public class ItemCartDTO
+    public class OrderItemtDTO
     {
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
@@ -12,9 +12,9 @@ namespace ESE.Order.API.Application.DTO
         public string Image { get; set; }
         public int Quantity { get; set; }
 
-        public static OrderItem ToOrderItem(ItemCartDTO itemCartDTO)
+        public static OrderItem ToOrderItem(OrderItemtDTO orderItemDTO)
         {
-            return new OrderItem(itemCartDTO.ProductId, itemCartDTO.Name, itemCartDTO.Quantity, itemCartDTO.Value, itemCartDTO.Image);
+            return new OrderItem(orderItemDTO.ProductId, orderItemDTO.Name, orderItemDTO.Quantity, orderItemDTO.Value, orderItemDTO.Image);
         }
     }
 }

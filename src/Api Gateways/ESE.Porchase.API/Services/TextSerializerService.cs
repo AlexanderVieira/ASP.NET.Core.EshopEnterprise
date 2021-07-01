@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ESE.Porchase.API.Services
 {
-    public abstract class TextSerializerService
+    public class TextSerializerService
     {
         protected StringContent GetContent(object obj)
         {
