@@ -11,9 +11,9 @@ namespace ESE.Porchase.API.Services
         private readonly HttpClient _httpClient;
 
         public PaymentService(HttpClient httpClient, IOptions<AppSettings> settings)
-        {
+        {            
+            httpClient.BaseAddress = new Uri("https://localhost:44335");
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.PaymentUrl);
         }
         
     }

@@ -14,9 +14,9 @@ namespace ESE.Porchase.API.Services
         private readonly HttpClient _httpClient;
 
         public ClientService(HttpClient httpClient, IOptions<AppSettings> settings)
-        {
+        {            
+            httpClient.BaseAddress = new Uri("https://localhost:44395");
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.ClientUrl);
         }
 
         public async Task<AddressDTO> GetAddress()

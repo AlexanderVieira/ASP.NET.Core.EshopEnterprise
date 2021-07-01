@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "IIS - Development": {
+    "IIS - Dev": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {

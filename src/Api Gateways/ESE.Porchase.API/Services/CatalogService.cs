@@ -14,9 +14,9 @@ namespace ESE.Porchase.API.Services
         private readonly HttpClient _httpClient;
 
         public CatalogService(HttpClient httpClient, IOptions<AppSettings> settings)
-        {
+        {            
+            httpClient.BaseAddress = new Uri("https://localhost:44364");
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.CatalogUrl);            
         }
 
         public async Task<IEnumerable<ItemProductDTO>> GetAll(IEnumerable<Guid> ids)
