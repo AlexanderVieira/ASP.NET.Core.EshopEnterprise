@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '7c973a2f-5464-4d97-99dc-1cfb390ee084'
   imageRepository: 'eshopenterprise'
   containerRegistry: 'acrdesenv.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
+  dockerfilePath: '**/Dockerfile'  
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -35,6 +35,7 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
+        buildContext: '$(Build.Repository.LocalPath)'
+        tags: 
           $(tag)
           latest
