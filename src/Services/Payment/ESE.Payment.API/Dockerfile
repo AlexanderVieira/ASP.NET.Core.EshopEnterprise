@@ -7,10 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/Services/Payment/ESE.Payment.API/ESE.Payment.API.csproj", "src/Services/Payment/ESE.Payment.API/"]
-RUN dotnet restore "src/Services/Payment/ESE.Payment.API/ESE.Payment.API.csproj"
+COPY ["./Services/Payment/ESE.Payment.API/ESE.Payment.API.csproj", "Services/Payment/ESE.Payment.API/"]
+COPY ["./Buliding Blocks/Core/ESE.Core/ESE.Core.csproj", "Buliding Blocks/Core/ESE.Core/"]
+COPY ["./Buliding Blocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "Buliding Blocks/MessageBus/ESE.MessageBus/"]
+COPY ["./Buliding Blocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "Buliding Blocks/Services/ESE.WebAPI.Core/"]
+
+RUN dotnet restore "Services/Payment/ESE.Payment.API/ESE.Payment.API.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Payment/ESE.Payment.API"
+WORKDIR "Services/Payment/ESE.Payment.API"
 RUN dotnet build "ESE.Payment.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
