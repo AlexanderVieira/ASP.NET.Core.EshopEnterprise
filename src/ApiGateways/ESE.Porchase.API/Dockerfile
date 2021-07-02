@@ -7,14 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["./ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj", "ApiGateways/ESE.Porchase.API/"]
+COPY ["ESE.Porchase.API.csproj", "ESE.Porchase.API/"]
 COPY ["./BulidingBlocks/Core/ESE.Core/ESE.Core.csproj", "BulidingBlocks/Core/ESE.Core/"]
 COPY ["./BulidingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "BulidingBlocks/MessageBus/ESE.MessageBus/"]
 COPY ["./BulidingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BulidingBlocks/Services/ESE.WebAPI.Core/"]
 
-RUN dotnet restore "ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj"
-COPY . .
-WORKDIR "ApiGateways/ESE.Porchase.API"
+RUN dotnet restore "ESE.Porchase.API/ESE.Porchase.API.csproj"
+COPY . ESE.Porchase.API/
+WORKDIR "src/ESE.Porchase.API"
 RUN dotnet build "ESE.Porchase.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
