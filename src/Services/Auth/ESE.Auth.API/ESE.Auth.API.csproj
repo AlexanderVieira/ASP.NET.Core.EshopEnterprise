@@ -36,9 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Buliding Blocks\Core\ESE.Core\ESE.Core.csproj" />
-    <ProjectReference Include="..\..\..\Buliding Blocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj" />
-    <ProjectReference Include="..\..\..\Buliding Blocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\..\..\BulidingBlocks\Core\ESE.Core\ESE.Core.csproj" />
+    <ProjectReference Include="..\..\..\BulidingBlocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj" />
+    <ProjectReference Include="..\..\..\BulidingBlocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
   </ItemGroup>
 
 

@@ -7,20 +7,20 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["./Services/Client/ESE.Client.API/ESE.Client.API.csproj", "Services/Client/ESE.Client.API/"]
+COPY ["./ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj", "ApiGateways/ESE.Porchase.API/"]
 COPY ["./BulidingBlocks/Core/ESE.Core/ESE.Core.csproj", "BulidingBlocks/Core/ESE.Core/"]
 COPY ["./BulidingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "BulidingBlocks/MessageBus/ESE.MessageBus/"]
 COPY ["./BulidingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BulidingBlocks/Services/ESE.WebAPI.Core/"]
 
-RUN dotnet restore "Services/Client/ESE.Client.API/ESE.Client.API.csproj"
+RUN dotnet restore "ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj"
 COPY . .
-WORKDIR "Services/Client/ESE.Client.API"
-RUN dotnet build "ESE.Client.API.csproj" -c Release -o /app/build
+WORKDIR "ApiGateways/ESE.Porchase.API"
+RUN dotnet build "ESE.Porchase.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ESE.Client.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "ESE.Porchase.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ESE.Client.API.dll"]
+ENTRYPOINT ["dotnet", "ESE.Porchase.API.dll"]

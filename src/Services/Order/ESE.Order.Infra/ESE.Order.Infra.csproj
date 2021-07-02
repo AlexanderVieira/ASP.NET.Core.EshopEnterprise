@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Buliding Blocks\Core\ESE.Core\ESE.Core.csproj" />
+    <ProjectReference Include="..\..\..\BulidingBlocks\Core\ESE.Core\ESE.Core.csproj" />
     <ProjectReference Include="..\ESE.Order.Domain\ESE.Order.Domain.csproj" />
   </ItemGroup>
 
