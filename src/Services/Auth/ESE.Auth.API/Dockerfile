@@ -7,10 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj", "src/Services/Auth/ESE.Auth.API/"]
-RUN dotnet restore "src/Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj"
+COPY ["./Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj", "Services/Auth/ESE.Auth.API/"]
+COPY ["./Buliding Blocks/Core/ESE.Core/ESE.Core.csproj", "Buliding Blocks/Core/ESE.Core/"]
+COPY ["./Buliding Blocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "Buliding Blocks/MessageBus/ESE.MessageBus/"]
+COPY ["./Buliding Blocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "Buliding Blocks/Services/ESE.WebAPI.Core/"]
+
+RUN dotnet restore "Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Auth/ESE.Auth.API"
+WORKDIR "Services/Auth/ESE.Auth.API"
 RUN dotnet build "ESE.Auth.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
