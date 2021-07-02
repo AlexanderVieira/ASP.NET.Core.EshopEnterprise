@@ -14,7 +14,7 @@ COPY ["src/BulidingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src
 
 RUN dotnet restore "src/ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj"
 COPY . .
-WORKDIR "src/src/ApiGateways/ESE.Porchase.API"
+WORKDIR "src/ApiGateways/ESE.Porchase.API"
 RUN dotnet build "ESE.Porchase.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
