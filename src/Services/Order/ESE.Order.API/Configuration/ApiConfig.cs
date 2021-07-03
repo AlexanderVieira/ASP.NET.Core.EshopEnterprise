@@ -14,7 +14,7 @@ namespace ESE.Order.API.Configuration
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<OrderContext>(opt =>
-                opt.UseSqlServer(configuration.GetConnectionString("ConnStrMSSQLLocalDB")));
+                opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
 

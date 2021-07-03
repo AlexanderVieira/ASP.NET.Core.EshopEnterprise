@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using NetDevPack.Security.JwtExtensions;
 using System.Text;
 
 namespace ESE.WebAPI.Core.Auth
@@ -14,8 +15,7 @@ namespace ESE.WebAPI.Core.Auth
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);            
+            var appSettings = appSettingsSection.Get<AppSettings>();                     
 
             services.AddAuthentication(x =>
             {
@@ -25,15 +25,7 @@ namespace ESE.WebAPI.Core.Auth
             {
                 x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = appSettings.ValidIn,
-                    ValidIssuer = appSettings.Emitter
-                };
+                x.SetJwksOptions(new JwkOptions(appSettings.AuthenticationJwksUrl));
             });
         }
 
