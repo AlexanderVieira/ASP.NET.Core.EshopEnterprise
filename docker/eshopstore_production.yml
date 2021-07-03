@@ -1,0 +1,188 @@
+version: "3"
+
+services:
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq-eshopstore
+        environment:
+            RABBITMQ_DEFAULT_USER: "eshop"
+            RABBITMQ_DEFAULT_PASS: "eshop"
+
+    sql-server:
+        image: avs/eshopstore-sql-server:latest
+        container_name: eshopstore-sql-server
+        build: 
+            context: ../sql
+            dockerfile: ./Dockerfile
+        environment:
+            SA_PASSWORD: "MeuDB@123"
+            ACCEPT_EULA: "Y"     
+
+    web-mvc:
+        image: avs/eshopstore-web-mvc-ecommerce:latest
+        container_name: eshopstore-web-mvc-ecommerce
+        build:
+            context: ../src
+            dockerfile: ./Presentation/Web/MVC/ESE.Store.MVC/Dockerfile
+        restart: always            
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5001
+        volumes: 
+            - dpkeys:/var/data_protection_keys/         
+        depends_on:
+            - api-catalog
+            - api-auth
+            - api-client
+            - api-bff-porchases
+
+    api-auth:
+        image: avs/eshopstore-api-auth:latest
+        container_name: eshopstore-api-auth    
+        build: 
+            context: ../src
+            dockerfile: ./Services/Auth/ESE.Auth.API/Dockerfile
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5101;http://+5102
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=eshopstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - sql-server
+            
+    api-shoppingcart:
+        image: avs/eshopstore-api-shoppingcart:latest
+        container_name: eshopstore-api-shoppingcart
+        build: 
+            context: ../src
+            dockerfile: ./services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
+        restart: always             
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5201;http://+5202
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=eshopstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-auth
+            - sql-server         
+
+    api-catalog:
+        image: avs/eshopstore-api-catalog:latest
+        container_name: eshopstore-api-catalog
+        build: 
+            context: ../src
+            dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5301;http://+5302
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=eshopstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - sql-server
+
+    api-client:
+        image: avs/eshopstore-api-client:latest
+        container_name: eshopstore-api-client    
+        build: 
+            context: ../src
+            dockerfile: ./services/Client/ESE.Client.API/Dockerfile
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5401;http://+5402
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=eshopstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-auth
+            - sql-server  
+
+    api-bff-porchases:
+        image: avs/eshopstore-api-bff-porchases:latest
+        container_name: eshopstore-api-bff-porchases
+        build: 
+            context: ../src
+            dockerfile: ./ApiGateways/ESE.Porchase.API/Dockerfile  
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5501;http://+5502
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=eshopstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-auth
+            - api-shoppingcart
+            - api-payment
+            - api-order
+            
+    api-payment:
+        image: avs/eshopstore-api-payment:latest
+        container_name: eshopstore-api-payment    
+        build: 
+            context: ../src
+            dockerfile: ./services/Payment/ESE.Payment.API/Dockerfile
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5601;http://+5602
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=eshopstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-auth
+            - api-order
+            - sql-server
+            
+    api-order:
+        image: avs/eshopstore-api-order:latest
+        container_name: eshopstore-api-order    
+        build: 
+            context: ../src
+            dockerfile: ./services/Order/ESE.Order.API/Dockerfile 
+        restart: always             
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5701;http://+5702
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=eshopstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - sql-server
+            - api-auth                    
+
+    eshopstore-server:
+        image: avs/eshopstore-server:latest
+        container_name: eshopstore-server    
+        build: 
+            context: ./
+            dockerfile: ./nginx/Dockerfile 
+        restart: always 
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - web-mvc
+
+volumes:
+    dpkeys:     
