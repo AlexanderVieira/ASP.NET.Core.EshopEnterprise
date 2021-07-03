@@ -60,7 +60,7 @@ services:
         container_name: eshopstore-api-shoppingcart
         build: 
             context: ../src
-            dockerfile: ./services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
+            dockerfile: ./Services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -97,7 +97,7 @@ services:
         container_name: eshopstore-api-client    
         build: 
             context: ../src
-            dockerfile: ./services/Client/ESE.Client.API/Dockerfile
+            dockerfile: ./Services/Client/ESE.Client.API/Dockerfile
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -137,7 +137,7 @@ services:
         container_name: eshopstore-api-payment    
         build: 
             context: ../src
-            dockerfile: ./services/Payment/ESE.Payment.API/Dockerfile
+            dockerfile: ./Services/Payment/ESE.Payment.API/Dockerfile
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -157,7 +157,7 @@ services:
         container_name: eshopstore-api-order    
         build: 
             context: ../src
-            dockerfile: ./services/Order/ESE.Order.API/Dockerfile 
+            dockerfile: ./Services/Order/ESE.Order.API/Dockerfile 
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
