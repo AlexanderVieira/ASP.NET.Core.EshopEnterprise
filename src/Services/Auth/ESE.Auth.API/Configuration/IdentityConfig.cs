@@ -13,7 +13,7 @@ namespace ESE.Auth.API.Configuration
         public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration){
 
             services.AddDbContext<AuthDbContext>(options => 
-                options.UseSqlServer(configuration.GetConnectionString("ConnStrMSSQLLocalDB")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
