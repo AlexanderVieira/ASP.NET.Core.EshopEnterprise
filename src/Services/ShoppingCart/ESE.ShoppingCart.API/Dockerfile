@@ -8,10 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["./Services/ShoppingCart/ESE.ShoppingCart.API/ESE.ShoppingCart.API.csproj", "Services/ShoppingCart/ESE.ShoppingCart.API/"]
+COPY ["./BulidingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BulidingBlocks/Services/ESE.WebAPI.Core/"]
 COPY ["./BulidingBlocks/Core/ESE.Core/ESE.Core.csproj", "BulidingBlocks/Core/ESE.Core/"]
 COPY ["./BulidingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "BulidingBlocks/MessageBus/ESE.MessageBus/"]
-COPY ["./BulidingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BulidingBlocks/Services/ESE.WebAPI.Core/"]
-
 RUN dotnet restore "Services/ShoppingCart/ESE.ShoppingCart.API/ESE.ShoppingCart.API.csproj"
 COPY . .
 WORKDIR "Services/ShoppingCart/ESE.ShoppingCart.API"
