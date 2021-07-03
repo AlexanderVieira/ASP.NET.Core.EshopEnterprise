@@ -5,6 +5,7 @@ using ESE.WebAPI.Core.AspNetUser.Interfaces;
 using ESE.WebAPI.Core.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetDevPack.Security.JwtSigningCredentials.Interfaces;
 using System;
@@ -21,23 +22,23 @@ namespace ESE.Auth.API.Services
         public readonly SignInManager<IdentityUser> SignInManager;
         public readonly UserManager<IdentityUser> UserManager;
         private readonly AppSettings _appSettings;
-        private readonly AppTokenSettings _appTokenSettingsSettings;
+        private readonly AppTokenSettings _appTokenSettings;
         private readonly AuthDbContext _context;
         private readonly IJsonWebKeySetService _jwksService;
         private readonly IAspNetUser _aspNetUser;
 
         public AuthenticationService(SignInManager<IdentityUser> signInManager, 
                                      UserManager<IdentityUser> userManager, 
-                                     AppSettings appSettings, 
-                                     AppTokenSettings appTokenSettingsSettings, 
+                                     IOptions<AppSettings> appSettings,
+                                     IOptions<AppTokenSettings> appTokenSettings, 
                                      AuthDbContext context, 
                                      IJsonWebKeySetService jwksService, 
                                      IAspNetUser aspNetUser)
         {
             SignInManager = signInManager;
             UserManager = userManager;
-            _appSettings = appSettings;
-            _appTokenSettingsSettings = appTokenSettingsSettings;
+            _appSettings = appSettings.Value;
+            _appTokenSettings = appTokenSettings.Value;
             _context = context;
             _jwksService = jwksService;
             _aspNetUser = aspNetUser;
@@ -116,7 +117,7 @@ namespace ESE.Auth.API.Services
             var refreshToken = new RefreshToken
             {
                 Username = email,
-                ExpirationDate = DateTime.UtcNow.AddHours(_appTokenSettingsSettings.RefreshTokenExpiration)
+                ExpirationDate = DateTime.UtcNow.AddHours(_appTokenSettings.RefreshTokenExpiration)
             };
 
             _context.RefreshTokens.RemoveRange(_context.RefreshTokens.Where(u => u.Username == email));
