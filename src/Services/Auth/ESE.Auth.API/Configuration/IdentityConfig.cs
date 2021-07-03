@@ -26,9 +26,7 @@ namespace ESE.Auth.API.Configuration
                 .AddRoles<IdentityRole>()
                 .AddErrorDescriber<IdentityMessagesPtBr>()
                 .AddEntityFrameworkStores<AuthDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddJwtConfiguration(configuration);
+                .AddDefaultTokenProviders();            
 
             return services;
         }      

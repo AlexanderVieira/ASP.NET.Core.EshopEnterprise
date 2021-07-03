@@ -98,7 +98,7 @@ namespace ESE.Auth.API.Services
             {
                 AccessToken = encodedToken,
                 RefreshToken = refreshToken.Token,
-                ExpiresIn = TimeSpan.FromHours(_appSettings.ExpirationTime).TotalSeconds,
+                ExpiresIn = TimeSpan.FromHours(1).TotalSeconds,
                 UserToken = new UserToken
                 {
                     Id = user.Id,
