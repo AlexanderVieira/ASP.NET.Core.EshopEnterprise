@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: avseshopstoresqlserver 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avseshopstoresqlserver
+  template:
+    metadata:
+      labels:
+        app: avseshopstoresqlserver 
+    spec:
+      containers:
+        - name: avseshopstoresqlserver 
+          image: azcrdev01.azurecr.io/avseshopstoresqlserver
+          ports:
+          - containerPort: 1433
