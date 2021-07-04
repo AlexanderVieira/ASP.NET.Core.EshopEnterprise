@@ -3,7 +3,7 @@ version: "3"
 services:
 
     rabbitmq:
-        image: rabbitmq:3-management
+        image: rabbitmq:3.8.18-management
         container_name: rabbitmq-eshopstore
         environment:
             RABBITMQ_DEFAULT_USER: "eshop"
