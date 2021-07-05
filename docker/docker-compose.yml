@@ -1,13 +1,6 @@
 version: "3"
 
-services:
-
-    rabbitmq:
-        image: rabbitmq:3-management
-        container_name: rabbitmq-eshopstore
-        environment:
-            RABBITMQ_DEFAULT_USER: "eshop"
-            RABBITMQ_DEFAULT_PASS: "eshop"
+services:    
 
     sql-server:
         image: avs/eshopstore-sql-server:latest
@@ -169,8 +162,8 @@ services:
         depends_on:
             - rabbitmq
             - sql-server
-            - api-auth                    
-
+            - api-auth           
+    
     eshopstore-server:
         image: avs/eshopstore-server:latest
         container_name: eshopstore-server    
@@ -184,5 +177,12 @@ services:
         depends_on:
             - web-mvc
 
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq-eshopstore
+        environment:
+            RABBITMQ_DEFAULT_USER: "eshop"
+            RABBITMQ_DEFAULT_PASS: "eshop"
+        
 volumes:
     dpkeys:
