@@ -36,6 +36,11 @@ namespace ESE.WebAPI.Core.AspNetUser
             return IsAuthenticated() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
         }
 
+        public string GetUserRefreshToken()
+        {
+            return IsAuthenticated() ? _accessor.HttpContext.User.GetUserRefreshToken() : "";           
+        }
+
         public string GetUserToken()
         {
             return IsAuthenticated() ? _accessor.HttpContext.User.GetUserToken() : "";
