@@ -1,3 +1,4 @@
+using ESE.Auth.API.Services;
 using ESE.WebAPI.Core.AspNetUser;
 using ESE.WebAPI.Core.AspNetUser.Interfaces;
 using ESE.WebAPI.Core.Auth;
@@ -14,6 +15,7 @@ namespace ESE.Auth.API.Configuration
          public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<AuthenticationService>();
             services.AddScoped<IAspNetUser, AspNetUser>();
             return services;
         }

@@ -2,21 +2,6 @@ version: "3"
 
 services:    
 
-    rabbitmq:
-        image: rabbitmq:3-management
-        container_name: rabbitmq-eshopstore
-        build: 
-            context: ../docker
-            dockerfile: ./Dockerfile
-        environment:
-            RABBITMQ_DEFAULT_USER: "eshop"
-            RABBITMQ_DEFAULT_PASS: "eshop"
-        ports:
-            - "5671:5761"
-            - "5672:5672"
-            - "15672:15672"
-            - "25672:25672"
-
     sql-server:
         image: avs/eshopstore-sql-server:latest
         container_name: eshopstore-sql-server
@@ -54,7 +39,11 @@ services:
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5101;http://+5102       
+            - ASPNETCORE_URLS=https://+:5101;http://+5102
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
         depends_on:
             - rabbitmq
             - sql-server
@@ -68,7 +57,11 @@ services:
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5201;http://+5202            
+            - ASPNETCORE_URLS=https://+:5201;http://+5202
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
         depends_on:
             - rabbitmq
             - api-auth
@@ -83,7 +76,11 @@ services:
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5301;http://+5302            
+            - ASPNETCORE_URLS=https://+:5301;http://+5302
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
         depends_on:
             - rabbitmq
             - sql-server
@@ -97,7 +94,11 @@ services:
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5401;http://+5402            
+            - ASPNETCORE_URLS=https://+:5401;http://+5402
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
         depends_on:
             - rabbitmq
             - api-auth
@@ -112,7 +113,11 @@ services:
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5501;http://+5502            
+            - ASPNETCORE_URLS=https://+:5501;http://+5502
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
         depends_on:
             - rabbitmq
             - api-auth
@@ -129,7 +134,11 @@ services:
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5601;http://+5602            
+            - ASPNETCORE_URLS=https://+:5601;http://+5602
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
         depends_on:
             - rabbitmq
             - api-auth
@@ -145,15 +154,19 @@ services:
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5701;http://+5702            
+            - ASPNETCORE_URLS=https://+:5701;http://+5702
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
         depends_on:
             - rabbitmq
             - sql-server
             - api-auth           
     
-    nginx:
-        image: avs/eshopstore-nginx:latest
-        container_name: eshopstore-nginx    
+    eshopstore-server:
+        image: avs/eshopstore-server:latest
+        container_name: eshopstore-server    
         build: 
             context: ./
             dockerfile: ./nginx/Dockerfile 
@@ -162,4 +175,14 @@ services:
             - "80:80"
             - "443:443"
         depends_on:
-            - web-mvc    
+            - web-mvc
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq-eshopstore
+        environment:
+            RABBITMQ_DEFAULT_USER: "eshop"
+            RABBITMQ_DEFAULT_PASS: "eshop"
+        
+volumes:
+    dpkeys:

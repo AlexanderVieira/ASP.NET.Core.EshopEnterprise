@@ -7,5 +7,9 @@ namespace ESE.Store.MVC.Services.Interfaces
     {
         Task<UserResponseLogin> Login(UserLogin userLogin);
         Task<UserResponseLogin> Register(UserRegister userRegister);
+        Task RealizarLogin(UserResponseLogin response);
+        Task Logout();
+        bool TokenExpirado();
+        Task<bool> RefreshTokenValido();
     }
 }

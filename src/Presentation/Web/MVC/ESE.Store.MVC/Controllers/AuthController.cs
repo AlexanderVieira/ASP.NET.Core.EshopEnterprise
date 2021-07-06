@@ -1,12 +1,6 @@
 ﻿using ESE.Store.MVC.Models;
 using ESE.Store.MVC.Services.Interfaces;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ESE.Store.MVC.Controllers
@@ -37,7 +31,7 @@ namespace ESE.Store.MVC.Controllers
 
             if (HasResponseErrors(response.ResponseResult)) return View(userRegister);
 
-            await RealizarLogin(response);
+            await _authService.RealizarLogin(response);
 
             return RedirectToAction("Index", "Catalog");
         }
@@ -61,7 +55,7 @@ namespace ESE.Store.MVC.Controllers
 
             if (HasResponseErrors(response.ResponseResult)) return View(userLogin);
 
-            await RealizarLogin(response);
+            await _authService.RealizarLogin(response);
 
             if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Catalog");
 
@@ -72,35 +66,9 @@ namespace ESE.Store.MVC.Controllers
         [Route("logoff")]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _authService.Logout();
             return RedirectToAction("Index", "Catalog");
-        }
-
-        private async Task RealizarLogin(UserResponseLogin response)
-        {
-            var token = GetTokenFormated(response.AccessToken);
-
-            var claims = new List<Claim>();
-            claims.Add(new Claim("JWT", response.AccessToken));
-            claims.AddRange(token.Claims);
-
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60),
-                IsPersistent = true
-            };
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
-        }
-
-        private static JwtSecurityToken GetTokenFormated(string jwtToken)
-        {
-            return new JwtSecurityTokenHandler().ReadToken(jwtToken) as JwtSecurityToken;
-        }
+        }    
+       
     }
 }

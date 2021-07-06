@@ -1,4 +1,5 @@
 ﻿using ESE.Store.MVC.Extensions.CpfAnnotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -49,6 +50,7 @@ namespace ESE.Store.MVC.Models
         public string AccessToken { get; set; }
         public double ExpiresIn { get; set; }
         public UserToken UserToken { get; set; }
+        public string RefreshToken { get; set; }
         public ResponseResult ResponseResult { get; set; }
     }
 

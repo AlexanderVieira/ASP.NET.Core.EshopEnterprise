@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using NetDevPack.Security.JwtExtensions;
-using System.Text;
 
 namespace ESE.WebAPI.Core.Auth
 {
