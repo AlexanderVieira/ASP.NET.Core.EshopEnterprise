@@ -22,6 +22,10 @@ namespace ESE.Catalog.API.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(250)");
 
+            builder.Property(c => c.Value)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
+
             builder.ToTable("Products");
         }
     }

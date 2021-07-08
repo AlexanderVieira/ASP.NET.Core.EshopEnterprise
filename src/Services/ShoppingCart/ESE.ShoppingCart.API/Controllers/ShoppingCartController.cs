@@ -23,7 +23,7 @@ namespace ESE.ShoppingCart.API.Controllers
             _context = context;
         }
 
-        [HttpGet("cart")]
+        [HttpGet("carts")]
         public async Task<CustomerCart> GetCart()
         {
             return await GetCustomerCart() ?? new CustomerCart();
