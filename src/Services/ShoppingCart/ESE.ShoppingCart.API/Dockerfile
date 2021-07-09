@@ -7,13 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/Services/ShoppingCart/ESE.ShoppingCart.API/ESE.ShoppingCart.API.csproj", "src/Services/ShoppingCart/ESE.ShoppingCart.API/"]
-COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
-COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
-COPY ["src/BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "src/BuildingBlocks/MessageBus/ESE.MessageBus/"]
-RUN dotnet restore "src/Services/ShoppingCart/ESE.ShoppingCart.API/ESE.ShoppingCart.API.csproj"
+COPY ["./Services/ShoppingCart/ESE.ShoppingCart.API/ESE.ShoppingCart.API.csproj", "Services/ShoppingCart/ESE.ShoppingCart.API/"]
+COPY ["./BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BuildingBlocks/Services/ESE.WebAPI.Core/"]
+COPY ["./BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "BuildingBlocks/Core/ESE.Core/"]
+COPY ["./BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "BuildingBlocks/MessageBus/ESE.MessageBus/"]
+RUN dotnet restore "Services/ShoppingCart/ESE.ShoppingCart.API/ESE.ShoppingCart.API.csproj"
 COPY . .
-WORKDIR "/src/src/Services/ShoppingCart/ESE.ShoppingCart.API"
+WORKDIR "Services/ShoppingCart/ESE.ShoppingCart.API"
 RUN dotnet build "ESE.ShoppingCart.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

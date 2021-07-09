@@ -7,12 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/Presentation/Web/MVC/ESE.Store.MVC/ESE.Store.MVC.csproj", "src/Presentation/Web/MVC/ESE.Store.MVC/"]
-COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
-COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
-RUN dotnet restore "src/Presentation/Web/MVC/ESE.Store.MVC/ESE.Store.MVC.csproj"
+COPY ["./Presentation/Web/MVC/ESE.Store.MVC/ESE.Store.MVC.csproj", "Presentation/Web/MVC/ESE.Store.MVC/"]
+COPY ["./BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "BuildingBlocks/Core/ESE.Core/"]
+COPY ["./BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BuildingBlocks/Services/ESE.WebAPI.Core/"]
+RUN dotnet restore "Presentation/Web/MVC/ESE.Store.MVC/ESE.Store.MVC.csproj"
 COPY . .
-WORKDIR "/src/src/Presentation/Web/MVC/ESE.Store.MVC"
+WORKDIR "Presentation/Web/MVC/ESE.Store.MVC"
 RUN dotnet build "ESE.Store.MVC.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -6,14 +6,14 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-WORKDIR /src
-COPY ["src/ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj", "src/ApiGateways/ESE.Porchase.API/"]
-COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
-COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
-COPY ["src/BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "src/BuildingBlocks/MessageBus/ESE.MessageBus/"]
-RUN dotnet restore "src/ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj"
+WORKDIR /.
+COPY ["./ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj", "ApiGateways/ESE.Porchase.API/"]
+COPY ["./BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BuildingBlocks/Services/ESE.WebAPI.Core/"]
+COPY ["./BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "BuildingBlocks/Core/ESE.Core/"]
+COPY ["./BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "BuildingBlocks/MessageBus/ESE.MessageBus/"]
+RUN dotnet restore "ApiGateways/ESE.Porchase.API/ESE.Porchase.API.csproj"
 COPY . .
-WORKDIR "/src/src/ApiGateways/ESE.Porchase.API"
+WORKDIR "ApiGateways/ESE.Porchase.API"
 RUN dotnet build "ESE.Porchase.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

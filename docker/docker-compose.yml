@@ -19,7 +19,7 @@ services:
             - "25672:25672"
 
     ese-db:
-        image: avs/eshopstore-ese-db:latest
+        image: avs/eshopstore-db:latest
         container_name: eshopstore-sqlserver
         hostname: eshopstore-sqlserver
         build: 
@@ -30,7 +30,7 @@ services:
             ACCEPT_EULA: "Y"     
 
     ese-api-auth:
-        image: avs/eshopstore-ese-api-auth:latest
+        image: avs/eshopstore-api-auth:latest
         container_name: eshopstore-api-auth
         hostname: eshopstore-api-auth    
         build: 
@@ -173,8 +173,8 @@ services:
             - ese-api-order
     
     ese-web-mvc:
-        image: avs/eshopstore-web-mvc-ecommerce:latest
-        container_name: eshopstore-web-mvc-ecommerce
+        image: avs/eshopstore-web-mvc:latest
+        container_name: eshopstore-web-mvc
         hostname: eshopstore-web-mvc
         build:
             context: ../src

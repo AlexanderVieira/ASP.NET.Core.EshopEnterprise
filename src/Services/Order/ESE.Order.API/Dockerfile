@@ -7,15 +7,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/Services/Order/ESE.Order.API/ESE.Order.API.csproj", "src/Services/Order/ESE.Order.API/"]
-COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
-COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
-COPY ["src/Services/Order/ESE.Order.Domain/ESE.Order.Domain.csproj", "src/Services/Order/ESE.Order.Domain/"]
-COPY ["src/BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "src/BuildingBlocks/MessageBus/ESE.MessageBus/"]
-COPY ["src/Services/Order/ESE.Order.Infra/ESE.Order.Infra.csproj", "src/Services/Order/ESE.Order.Infra/"]
-RUN dotnet restore "src/Services/Order/ESE.Order.API/ESE.Order.API.csproj"
+COPY ["./Services/Order/ESE.Order.API/ESE.Order.API.csproj", "Services/Order/ESE.Order.API/"]
+COPY ["./BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BuildingBlocks/Services/ESE.WebAPI.Core/"]
+COPY ["./BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "BuildingBlocks/Core/ESE.Core/"]
+COPY ["./Services/Order/ESE.Order.Domain/ESE.Order.Domain.csproj", "Services/Order/ESE.Order.Domain/"]
+COPY ["./BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "BuildingBlocks/MessageBus/ESE.MessageBus/"]
+COPY ["./Services/Order/ESE.Order.Infra/ESE.Order.Infra.csproj", "Services/Order/ESE.Order.Infra/"]
+RUN dotnet restore "Services/Order/ESE.Order.API/ESE.Order.API.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Order/ESE.Order.API"
+WORKDIR "Services/Order/ESE.Order.API"
 RUN dotnet build "ESE.Order.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -7,12 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/Services/Catalog/ESE.Catalog.API/ESE.Catalog.API.csproj", "src/Services/Catalog/ESE.Catalog.API/"]
-COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
-COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
-RUN dotnet restore "src/Services/Catalog/ESE.Catalog.API/ESE.Catalog.API.csproj"
+COPY ["./Services/Catalog/ESE.Catalog.API/ESE.Catalog.API.csproj", "Services/Catalog/ESE.Catalog.API/"]
+COPY ["./BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BuildingBlocks/Services/ESE.WebAPI.Core/"]
+COPY ["./BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "BuildingBlocks/Core/ESE.Core/"]
+RUN dotnet restore "Services/Catalog/ESE.Catalog.API/ESE.Catalog.API.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Catalog/ESE.Catalog.API"
+WORKDIR "Services/Catalog/ESE.Catalog.API"
 RUN dotnet build "ESE.Catalog.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

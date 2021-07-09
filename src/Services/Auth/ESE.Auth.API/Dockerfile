@@ -7,13 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj", "src/Services/Auth/ESE.Auth.API/"]
-COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
-COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
-COPY ["src/BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "src/BuildingBlocks/MessageBus/ESE.MessageBus/"]
-RUN dotnet restore "src/Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj"
+COPY ["./Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj", "Services/Auth/ESE.Auth.API/"]
+COPY ["./BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "BuildingBlocks/Services/ESE.WebAPI.Core/"]
+COPY ["./BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "BuildingBlocks/Core/ESE.Core/"]
+COPY ["./BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "BuildingBlocks/MessageBus/ESE.MessageBus/"]
+RUN dotnet restore "Services/Auth/ESE.Auth.API/ESE.Auth.API.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Auth/ESE.Auth.API"
+WORKDIR "Services/Auth/ESE.Auth.API"
 RUN dotnet build "ESE.Auth.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
