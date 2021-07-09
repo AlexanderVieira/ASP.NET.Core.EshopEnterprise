@@ -8,10 +8,10 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/Services/Order/ESE.Order.API/ESE.Order.API.csproj", "src/Services/Order/ESE.Order.API/"]
-COPY ["src/BulidingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BulidingBlocks/Services/ESE.WebAPI.Core/"]
-COPY ["src/BulidingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BulidingBlocks/Core/ESE.Core/"]
+COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
+COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
 COPY ["src/Services/Order/ESE.Order.Domain/ESE.Order.Domain.csproj", "src/Services/Order/ESE.Order.Domain/"]
-COPY ["src/BulidingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "src/BulidingBlocks/MessageBus/ESE.MessageBus/"]
+COPY ["src/BuildingBlocks/MessageBus/ESE.MessageBus/ESE.MessageBus.csproj", "src/BuildingBlocks/MessageBus/ESE.MessageBus/"]
 COPY ["src/Services/Order/ESE.Order.Infra/ESE.Order.Infra.csproj", "src/Services/Order/ESE.Order.Infra/"]
 RUN dotnet restore "src/Services/Order/ESE.Order.API/ESE.Order.API.csproj"
 COPY . .

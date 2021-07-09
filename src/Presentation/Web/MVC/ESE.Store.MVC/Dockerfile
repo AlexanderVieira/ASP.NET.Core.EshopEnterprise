@@ -8,8 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/Presentation/Web/MVC/ESE.Store.MVC/ESE.Store.MVC.csproj", "src/Presentation/Web/MVC/ESE.Store.MVC/"]
-COPY ["src/BulidingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BulidingBlocks/Core/ESE.Core/"]
-COPY ["src/BulidingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BulidingBlocks/Services/ESE.WebAPI.Core/"]
+COPY ["src/BuildingBlocks/Core/ESE.Core/ESE.Core.csproj", "src/BuildingBlocks/Core/ESE.Core/"]
+COPY ["src/BuildingBlocks/Services/ESE.WebAPI.Core/ESE.WebAPI.Core.csproj", "src/BuildingBlocks/Services/ESE.WebAPI.Core/"]
 RUN dotnet restore "src/Presentation/Web/MVC/ESE.Store.MVC/ESE.Store.MVC.csproj"
 COPY . .
 WORKDIR "/src/src/Presentation/Web/MVC/ESE.Store.MVC"

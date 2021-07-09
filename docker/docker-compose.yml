@@ -2,34 +2,152 @@ version: "3"
 
 services:    
 
-    rabbitmq:
-        image: rabbitmq:3-management
-        container_name: rabbitmq-eshopstore
+    ese-rabbitmq:
+        image: ese-rabbitmq:3-management
+        container_name: eshopstore-rabbitmq
+        hostname: eshopstore-rabbitmq
         build: 
             context: ../docker
-            dockerfile: ./Dockerfile
+            dockerfile: ./Rabbitmq/Dockerfile
         environment:
-            RABBITMQ_DEFAULT_USER: "eshop"
-            RABBITMQ_DEFAULT_PASS: "eshop"
+            ese-rabbitmq_DEFAULT_USER: "eshop"
+            ese-rabbitmq_DEFAULT_PASS: "eshop"
         ports:
             - "5671:5761"
             - "5672:5672"
             - "15672:15672"
             - "25672:25672"
 
-    sql-server:
-        image: avs/eshopstore-sql-server:latest
-        container_name: eshopstore-sql-server
+    ese-db:
+        image: avs/eshopstore-ese-db:latest
+        container_name: eshopstore-sqlserver
+        hostname: eshopstore-sqlserver
         build: 
-            context: ../sql
-            dockerfile: ./Dockerfile
+            context: ../docker
+            dockerfile: ./sql/Dockerfile
         environment:
             SA_PASSWORD: "MeuDB@123"
             ACCEPT_EULA: "Y"     
 
-    web-mvc:
+    ese-api-auth:
+        image: avs/eshopstore-ese-api-auth:latest
+        container_name: eshopstore-api-auth
+        hostname: eshopstore-api-auth    
+        build: 
+            context: ../src
+            dockerfile: ./Services/Auth/ESE.Auth.API/Dockerfile
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5101;http://+5102       
+        depends_on:
+            - ese-rabbitmq
+            - ese-db
+            
+    ese-api-catalog:
+        image: avs/eshopstore-api-catalog:latest
+        container_name: eshopstore-api-catalog
+        hostname: eshopstore-api-catalog
+        build: 
+            context: ../src
+            dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5301;http://+5302            
+        depends_on:
+            - ese-rabbitmq
+            - ese-db
+    
+    ese-api-shoppingcart:
+        image: avs/eshopstore-api-shoppingcart:latest
+        container_name: eshopstore-api-shoppingcart
+        hostname: eshopstore-api-shoppingcart
+        build: 
+            context: ../src
+            dockerfile: ./Services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
+        restart: always             
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5201;http://+5202            
+        depends_on:
+            - ese-rabbitmq
+            - ese-api-auth
+            - ese-db   
+
+    ese-api-client:
+        image: avs/eshopstore-api-client:latest
+        container_name: eshopstore-api-client
+        hostname: eshopstore-api-client    
+        build: 
+            context: ../src
+            dockerfile: ./Services/Client/ESE.Client.API/Dockerfile
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5401;http://+5402            
+        depends_on:
+            - ese-rabbitmq
+            - ese-api-auth
+            - ese-db  
+
+    ese-api-order:
+        image: avs/eshopstore-api-order:latest
+        container_name: eshopstore-api-order 
+        hostname: eshopstore-api-order   
+        build: 
+            context: ../src
+            dockerfile: ./Services/Order/ESE.Order.API/Dockerfile 
+        restart: always             
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5701;http://+5702            
+        depends_on:
+            - ese-rabbitmq
+            - ese-db
+            - ese-api-auth
+    
+    ese-api-payment:
+        image: avs/eshopstore-api-payment:latest
+        container_name: eshopstore-api-payment 
+        hostname: eshopstore-api-payment    
+        build: 
+            context: ../src
+            dockerfile: ./Services/Payment/ESE.Payment.API/Dockerfile
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5601;http://+5602            
+        depends_on:
+            - ese-rabbitmq
+            - ese-api-auth
+            - ese-api-order
+            - ese-db
+
+    ese-api-bff-porchases:
+        image: avs/eshopstore-api-bff-porchases:latest
+        container_name: eshopstore-api-bff-porchases
+        hostname: eshopstore-api-bff-porchases
+        build: 
+            context: ../src
+            dockerfile: ./ApiGateways/ESE.Porchase.API/Dockerfile  
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5501;http://+5502            
+        depends_on:
+            - ese-rabbitmq
+            - ese-api-auth
+            - ese-api-catalog
+            - ese-api-client
+            - ese-api-shoppingcart
+            - ese-api-payment
+            - ese-api-order
+    
+    ese-web-mvc:
         image: avs/eshopstore-web-mvc-ecommerce:latest
         container_name: eshopstore-web-mvc-ecommerce
+        hostname: eshopstore-web-mvc
         build:
             context: ../src
             dockerfile: ./Presentation/Web/MVC/ESE.Store.MVC/Dockerfile
@@ -40,120 +158,15 @@ services:
         volumes: 
             - dpkeys:/var/data_protection_keys/         
         depends_on:
-            - api-catalog
-            - api-auth
-            - api-client
-            - api-bff-porchases
+            - ese-api-catalog
+            - ese-api-auth
+            - ese-api-client
+            - ese-api-bff-porchases
 
-    api-auth:
-        image: avs/eshopstore-api-auth:latest
-        container_name: eshopstore-api-auth    
-        build: 
-            context: ../src
-            dockerfile: ./Services/Auth/ESE.Auth.API/Dockerfile
-        restart: always    
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5101;http://+5102       
-        depends_on:
-            - rabbitmq
-            - sql-server
-            
-    api-shoppingcart:
-        image: avs/eshopstore-api-shoppingcart:latest
-        container_name: eshopstore-api-shoppingcart
-        build: 
-            context: ../src
-            dockerfile: ./Services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
-        restart: always             
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5201;http://+5202            
-        depends_on:
-            - rabbitmq
-            - api-auth
-            - sql-server         
-
-    api-catalog:
-        image: avs/eshopstore-api-catalog:latest
-        container_name: eshopstore-api-catalog
-        build: 
-            context: ../src
-            dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
-        restart: always 
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5301;http://+5302            
-        depends_on:
-            - rabbitmq
-            - sql-server
-
-    api-client:
-        image: avs/eshopstore-api-client:latest
-        container_name: eshopstore-api-client    
-        build: 
-            context: ../src
-            dockerfile: ./Services/Client/ESE.Client.API/Dockerfile
-        restart: always 
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5401;http://+5402            
-        depends_on:
-            - rabbitmq
-            - api-auth
-            - sql-server  
-
-    api-bff-porchases:
-        image: avs/eshopstore-api-bff-porchases:latest
-        container_name: eshopstore-api-bff-porchases
-        build: 
-            context: ../src
-            dockerfile: ./ApiGateways/ESE.Porchase.API/Dockerfile  
-        restart: always 
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5501;http://+5502            
-        depends_on:
-            - rabbitmq
-            - api-auth
-            - api-shoppingcart
-            - api-payment
-            - api-order
-            
-    api-payment:
-        image: avs/eshopstore-api-payment:latest
-        container_name: eshopstore-api-payment    
-        build: 
-            context: ../src
-            dockerfile: ./Services/Payment/ESE.Payment.API/Dockerfile
-        restart: always    
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5601;http://+5602            
-        depends_on:
-            - rabbitmq
-            - api-auth
-            - api-order
-            - sql-server
-            
-    api-order:
-        image: avs/eshopstore-api-order:latest
-        container_name: eshopstore-api-order    
-        build: 
-            context: ../src
-            dockerfile: ./Services/Order/ESE.Order.API/Dockerfile 
-        restart: always             
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5701;http://+5702            
-        depends_on:
-            - rabbitmq
-            - sql-server
-            - api-auth           
-    
-    nginx:
+    ese-nginx:
         image: avs/eshopstore-nginx:latest
-        container_name: eshopstore-nginx    
+        container_name: eshopstore-nginx
+        hostname: eshopstore-nginx     
         build: 
             context: ./
             dockerfile: ./nginx/Dockerfile 
@@ -162,4 +175,4 @@ services:
             - "80:80"
             - "443:443"
         depends_on:
-            - web-mvc    
+            - ese-web-mvc    
