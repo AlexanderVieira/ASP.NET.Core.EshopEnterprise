@@ -1,8 +1,7 @@
 ﻿using ESE.Core.Comunication;
-using ESE.Porchase.API.Extensions;
 using ESE.Porchase.API.Models;
 using ESE.Porchase.API.Services.Interfaces;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -14,10 +13,11 @@ namespace ESE.Porchase.API.Services
     public class OrderService : TextSerializerService, IOrderService
     {
         private readonly HttpClient _httpClient;
+        private const string URL_KEY = "OrderUrl";
 
-        public OrderService(HttpClient httpClient, IOptions<AppSettings> settings)
+        public OrderService(HttpClient httpClient, IConfiguration configuration)
         {            
-            httpClient.BaseAddress = new Uri("https://localhost:44384");
+            httpClient.BaseAddress = new Uri(configuration[URL_KEY]);
             _httpClient = httpClient;
         }
 

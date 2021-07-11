@@ -27,7 +27,7 @@ namespace ESE.Catalog.API.Controllers
             return await _productRepository.GetAll();
         }
 
-        [HttpGet("catalog/products/list/{ids}")]
+        [HttpGet("catalog/products/list/{ids}")] 
         public async Task<IEnumerable<Product>> GetProductsById(string ids)
         {
             return await _productRepository.GetProductsById(ids);

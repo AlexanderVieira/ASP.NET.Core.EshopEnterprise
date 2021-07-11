@@ -10,8 +10,8 @@ services:
             context: ../docker
             dockerfile: ./rabbitmq/Dockerfile
         environment:
-            ese-rabbitmq_DEFAULT_USER: "eshop"
-            ese-rabbitmq_DEFAULT_PASS: "eshop"
+            rabbitmq_DEFAULT_USER: "eshop"
+            rabbitmq_DEFAULT_PASS: "eshop"
         ports:
             - "5671:5761"
             - "5672:5672"

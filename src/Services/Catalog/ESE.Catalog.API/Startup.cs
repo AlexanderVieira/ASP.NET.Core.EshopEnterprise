@@ -30,11 +30,8 @@ namespace ESE.Catalog.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiConfiguration(Configuration);
-
             services.AddJwtConfiguration(Configuration);
-
             services.AddSwaggerConfiguration();
-
             services.RegisterServices();
         }
                 

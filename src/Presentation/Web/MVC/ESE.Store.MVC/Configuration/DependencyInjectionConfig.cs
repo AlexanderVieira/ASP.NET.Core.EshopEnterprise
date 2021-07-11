@@ -4,6 +4,7 @@ using ESE.Store.MVC.Services.Handlers;
 using ESE.Store.MVC.Services.Interfaces;
 using ESE.WebAPI.Core.AspNetUser;
 using ESE.WebAPI.Core.AspNetUser.Interfaces;
+using ESE.WebAPI.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Configuration;
@@ -31,24 +32,28 @@ namespace ESE.Store.MVC.Configuration
             services.AddHttpClient<IAuthService, AuthService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()                
                 .AddPolicyHandler(PollyExtensions.TryWait())
+                .AllowSelfSignedCertificate()
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddHttpClient<ICatalogService, CatalogService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()               
                 .AddPolicyHandler(PollyExtensions.TryWait())
+                .AllowSelfSignedCertificate()
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddHttpClient<IClientService, ClientService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                 .AddPolicyHandler(PollyExtensions.TryWait())
+                .AllowSelfSignedCertificate()
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddHttpClient<IPorchasesBffService, PorchasesBffService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                 .AddPolicyHandler(PollyExtensions.TryWait())
+                .AllowSelfSignedCertificate()
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 

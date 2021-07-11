@@ -1,8 +1,7 @@
 ﻿using ESE.Core.Comunication;
-using ESE.Porchase.API.Extensions;
 using ESE.Porchase.API.Models;
 using ESE.Porchase.API.Services.Interfaces;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,16 +11,17 @@ namespace ESE.Porchase.API.Services
     public class CustomerCartService : TextSerializerService, ICustomerCartService
     {
         private readonly HttpClient _httpClient;
+        private const string URL_KEY = "ShoppingCartUrl";
 
-        public CustomerCartService(HttpClient httpClient, IOptions<AppSettings> settings)
+        public CustomerCartService(HttpClient httpClient, IConfiguration configuration)
         {            
-            httpClient.BaseAddress = new Uri("https://localhost:44339");
+            httpClient.BaseAddress = new Uri(configuration[URL_KEY]);
             _httpClient = httpClient;
         }
 
         public async Task<CustomerCartDTO> GetCustomerCart()
         {
-            var response = await _httpClient.GetAsync("/cart/");
+            var response = await _httpClient.GetAsync("/carts/");
             HandlerResponseErrors(response);
             return await DeserializeResponseObject<CustomerCartDTO>(response);
         }
