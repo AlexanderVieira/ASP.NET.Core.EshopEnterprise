@@ -7,7 +7,7 @@ networks:
 services: 
     
     ese-rabbitmq:
-        image: avs/eshopstore-rabbitmq:latest
+        image: eshopstore-rabbitmq:latest
         container_name: eshopstore-rabbitmq
         hostname: eshopstore-rabbitmq
         networks:
@@ -28,7 +28,7 @@ services:
             RABBITMQ_DEFAULT_VHOST: "/"
         
     ese-mssqlserver:                    
-        image: avs/eshopstore-mssqlserver:2017-latest-ubuntu
+        image: eshopstore-mssqlserver:latest
         container_name: eshopstore-mssqlserver
         hostname: eshopstore-mssqlserver         
         command: /bin/bash ./entrypoint.sh
@@ -38,7 +38,7 @@ services:
           context: ../docker
           dockerfile: ./sql/db/mssql/Dockerfile
         ports:
-          - 1433:1433
+          - "1433:1433"
         restart: always
         environment:
           - ACCEPT_EULA=Y
@@ -51,7 +51,7 @@ services:
           - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
             
     ese-api-auth:
-        image: avs/eshopstore-api-auth:latest
+        image: eshopstore-api-auth:latest
         container_name: eshopstore-api-auth
         hostname: eshopstore-api-auth
         networks:
@@ -72,7 +72,7 @@ services:
             - ese-mssqlserver
             
     ese-api-catalog:
-        image: avs/eshopstore-api-catalog:latest
+        image: eshopstore-api-catalog:latest
         container_name: eshopstore-api-catalog
         hostname: eshopstore-api-catalog
         networks:
@@ -93,7 +93,7 @@ services:
             - ese-mssqlserver
 
     ese-api-client:
-        image: avs/eshopstore-api-client:latest
+        image: eshopstore-api-client:latest
         container_name: eshopstore-api-client
         hostname: eshopstore-api-client
         networks:
@@ -115,7 +115,7 @@ services:
             - ese-mssqlserver
             
     ese-api-shoppingcart:
-        image: avs/eshopstore-api-shoppingcart:latest
+        image: eshopstore-api-shoppingcart:latest
         container_name: eshopstore-api-shoppingcart
         hostname: eshopstore-api-shoppingcart
         networks:
@@ -137,7 +137,7 @@ services:
             - ese-mssqlserver 
 
     ese-api-order:
-        image: avs/eshopstore-api-order:latest
+        image: eshopstore-api-order:latest
         container_name: eshopstore-api-order 
         hostname: eshopstore-api-order
         networks:
@@ -159,7 +159,7 @@ services:
             - ese-mssqlserver
 
     ese-api-bff-porchases:
-        image: avs/eshopstore-api-bff-porchases:latest
+        image: eshopstore-api-bff-porchases:latest
         container_name: eshopstore-api-bff-porchases
         hostname: eshopstore-api-bff-porchases
         networks:
@@ -185,7 +185,7 @@ services:
             - ese-api-order
     
     ese-web-mvc:
-        image: avs/eshopstore-web-mvc:latest
+        image: eshopstore-web-mvc:latest
         container_name: eshopstore-web-mvc
         hostname: eshopstore-web-mvc
         networks:
