@@ -67,7 +67,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro       
-        links:
+        depends_on:
             - ese-rabbitmq
             - ese-mssqlserver
             
@@ -88,7 +88,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        links:
+        depends_on:
             - ese-rabbitmq
             - ese-mssqlserver
 
@@ -109,7 +109,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        links:
+        depends_on:
             - ese-rabbitmq
             - ese-api-auth
             - ese-mssqlserver
@@ -131,7 +131,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        links:
+        depends_on:
             - ese-rabbitmq
             - ese-api-auth
             - ese-mssqlserver 
@@ -153,7 +153,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        links:
+        depends_on:
             - ese-rabbitmq            
             - ese-api-auth
             - ese-mssqlserver
@@ -175,7 +175,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        links:
+        depends_on:
             - ese-rabbitmq
             - ese-api-auth
             - ese-api-catalog
@@ -199,11 +199,11 @@ services:
             - ASPNETCORE_URLS=http://*:5001
         volumes: 
             - dpkeys:/var/data_protection_keys/    
-        links:
+        depends_on:
             - ese-api-catalog
 
     ese-nginx:
-        image: avs/eshopstore-nginx:latest
+        image: eshopstore-nginx:latest
         container_name: eshopstore-nginx
         hostname: eshopstore-nginx
         networks:
@@ -215,7 +215,7 @@ services:
         ports:
             - "80:80"
             - "443:443"
-        links:
+        depends_on:
             - ese-web-mvc    
 volumes:
     dpkeys:
