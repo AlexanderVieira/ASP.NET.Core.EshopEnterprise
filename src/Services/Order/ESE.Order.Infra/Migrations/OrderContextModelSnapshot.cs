@@ -31,6 +31,7 @@ namespace ESE.Order.Infra.Migrations
 
                     b.Property<int>("Code")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("Code")
                         .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
 
@@ -56,7 +57,7 @@ namespace ESE.Order.Infra.Migrations
 
                     b.HasIndex("VoucherId");
 
-                    b.ToTable("Pedidos");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ESE.Order.Domain.Model.OrderItem", b =>
@@ -88,7 +89,7 @@ namespace ESE.Order.Infra.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("PedidoItens");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("ESE.Order.Domain.Vouchers.Voucher", b =>
@@ -99,10 +100,6 @@ namespace ESE.Order.Infra.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
@@ -128,6 +125,11 @@ namespace ESE.Order.Infra.Migrations
                     b.Property<bool>("Used")
                         .HasColumnType("bit");
 
+                    b.Property<string>("VoucherCode")
+                        .IsRequired()
+                        .HasColumnName("VoucherCode")
+                        .HasColumnType("varchar(100)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Vouchers");
@@ -145,36 +147,36 @@ namespace ESE.Order.Infra.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("City")
-                                .HasColumnName("Cidade")
+                                .HasColumnName("City")
                                 .HasColumnType("varchar(100)");
 
                             b1.Property<string>("CodePostal")
-                                .HasColumnName("Cep")
+                                .HasColumnName("CodePostal")
                                 .HasColumnType("varchar(100)");
 
                             b1.Property<string>("Complement")
-                                .HasColumnName("Complemento")
+                                .HasColumnName("Complement")
                                 .HasColumnType("varchar(100)");
 
                             b1.Property<string>("District")
-                                .HasColumnName("Bairro")
+                                .HasColumnName("District")
                                 .HasColumnType("varchar(100)");
 
                             b1.Property<string>("Number")
-                                .HasColumnName("Numero")
+                                .HasColumnName("Number")
                                 .HasColumnType("varchar(100)");
 
                             b1.Property<string>("State")
-                                .HasColumnName("Estado")
+                                .HasColumnName("State")
                                 .HasColumnType("varchar(100)");
 
                             b1.Property<string>("Street")
-                                .HasColumnName("Logradouro")
+                                .HasColumnName("Street")
                                 .HasColumnType("varchar(100)");
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Pedidos");
+                            b1.ToTable("Orders");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");

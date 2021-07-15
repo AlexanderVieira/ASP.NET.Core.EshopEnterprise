@@ -40,7 +40,7 @@ namespace ESE.ShoppingCart.API.Data
                 .Ignore(c => c.Voucher)
                 .OwnsOne(c => c.Voucher, v =>
                 {
-                    v.Property(x => x.Code)
+                    v.Property(x => x.VoucherCode)
                     .HasColumnName("VoucherCode")
                     .HasColumnType("varchar(50)");
 

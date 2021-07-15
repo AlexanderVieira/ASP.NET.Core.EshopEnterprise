@@ -21,7 +21,7 @@ namespace ESE.Order.API.Application.Queries
             if (!voucher.IsValidForUse()) return null;
             return new VoucherDTO
             {
-                Code = voucher.Code,
+                Code = voucher.VoucherCode,
                 DiscountType = (int)voucher.DiscountType,
                 Percentage = voucher.Percentage,
                 TotalDiscount = voucher.TotalDiscount

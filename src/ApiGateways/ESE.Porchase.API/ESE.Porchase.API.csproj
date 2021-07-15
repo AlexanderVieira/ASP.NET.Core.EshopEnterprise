@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>500a5eb2-c0d3-4e45-8530-b8cd5922fe88</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BulidingBlocks\Core\ESE.Core\ESE.Core.csproj" />
-    <ProjectReference Include="..\..\BulidingBlocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj" />
-    <ProjectReference Include="..\..\BulidingBlocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Core\ESE.Core\ESE.Core.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
   </ItemGroup>
 
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetDevPack.Security.JwtExtensions;
+using System.Net.Http;
 
 namespace ESE.WebAPI.Core.Auth
 {
@@ -13,7 +14,7 @@ namespace ESE.WebAPI.Core.Auth
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
-            var appSettings = appSettingsSection.Get<AppSettings>();                     
+            var appSettings = appSettingsSection.Get<AppSettings>();
 
             services.AddAuthentication(x =>
             {
@@ -23,6 +24,7 @@ namespace ESE.WebAPI.Core.Auth
             {
                 x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
+                x.BackchannelHttpHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = delegate { return true; } };
                 x.SetJwksOptions(new JwkOptions(appSettings.AuthenticationJwksUrl));
             });
         }

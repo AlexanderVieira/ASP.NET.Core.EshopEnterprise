@@ -1,7 +1,6 @@
-﻿using ESE.Porchase.API.Extensions;
-using ESE.Porchase.API.Models;
+﻿using ESE.Porchase.API.Models;
 using ESE.Porchase.API.Services.Interfaces;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -12,10 +11,11 @@ namespace ESE.Porchase.API.Services
     public class ClientService : TextSerializerService, IClientService
     {
         private readonly HttpClient _httpClient;
+        private const string URL_KEY = "ClientUrl";
 
-        public ClientService(HttpClient httpClient, IOptions<AppSettings> settings)
+        public ClientService(HttpClient httpClient, IConfiguration configuration)
         {            
-            httpClient.BaseAddress = new Uri("https://localhost:44395");
+            httpClient.BaseAddress = new Uri(configuration[URL_KEY]);
             _httpClient = httpClient;
         }
 

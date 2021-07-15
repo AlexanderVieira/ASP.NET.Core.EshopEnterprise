@@ -1,8 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210714042854_mappingOrders.cs" />
+    <Compile Remove="Migrations\20210714042854_mappingOrders.Designer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3" />
@@ -14,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BulidingBlocks\Core\ESE.Core\ESE.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Core\ESE.Core\ESE.Core.csproj" />
     <ProjectReference Include="..\ESE.Order.Domain\ESE.Order.Domain.csproj" />
   </ItemGroup>
 

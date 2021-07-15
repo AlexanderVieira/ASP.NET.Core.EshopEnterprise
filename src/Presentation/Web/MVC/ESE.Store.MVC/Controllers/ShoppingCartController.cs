@@ -35,7 +35,7 @@ namespace ESE.Store.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("cart/update-item")]
         public async Task<IActionResult> UpdateItemCart(Guid productId, int quantity)
         {            
@@ -48,7 +48,7 @@ namespace ESE.Store.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("cart/remove-item")]
         public async Task<IActionResult> RemoveItemCart(Guid productId)
         {           

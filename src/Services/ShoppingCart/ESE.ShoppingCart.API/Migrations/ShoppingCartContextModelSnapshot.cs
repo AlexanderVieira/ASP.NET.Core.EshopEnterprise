@@ -83,10 +83,6 @@ namespace ESE.ShoppingCart.API.Migrations
                             b1.Property<Guid>("CustomerCartId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<string>("Code")
-                                .HasColumnName("VoucherCode")
-                                .HasColumnType("varchar(50)");
-
                             b1.Property<int>("DiscountType")
                                 .HasColumnName("DiscountType")
                                 .HasColumnType("int");
@@ -98,6 +94,10 @@ namespace ESE.ShoppingCart.API.Migrations
                             b1.Property<decimal?>("TotalDiscount")
                                 .HasColumnName("TotalDiscount")
                                 .HasColumnType("decimal(18,2)");
+
+                            b1.Property<string>("VoucherCode")
+                                .HasColumnName("VoucherCode")
+                                .HasColumnType("varchar(50)");
 
                             b1.HasKey("CustomerCartId");
 

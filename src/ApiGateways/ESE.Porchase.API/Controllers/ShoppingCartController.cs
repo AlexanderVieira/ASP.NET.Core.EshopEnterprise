@@ -42,7 +42,7 @@ namespace ESE.Porchase.API.Controllers
         }
 
         [HttpPost]
-        [Route("porchases/cart/items")]
+        [Route("porchases/cart/items/add-item")]
         public async Task<IActionResult> AddItemCart(ItemCartDTO itemCart)
         {
             var product = await _catalogService.GetById(itemCart.ProductId);
@@ -56,7 +56,7 @@ namespace ESE.Porchase.API.Controllers
         }
 
         [HttpPut]
-        [Route("porchases/cart/items/{productId}")]
+        [Route("porchases/cart/items/update-item/{productId}")]
         public async Task<IActionResult> UpdateItemCart(Guid productId, ItemCartDTO itemCart)
         {
             var product = await _catalogService.GetById(productId);
@@ -67,7 +67,7 @@ namespace ESE.Porchase.API.Controllers
         }
 
         [HttpDelete]
-        [Route("porchases/cart/items/{productId}")]
+        [Route("porchases/cart/items/remove-item/{productId}")]
         public async Task<IActionResult> RemoveItemCart(Guid productId)
         {
             var product = _catalogService.GetById(productId);

@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6CBBFF08-5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{1CCE3905-A150-4E9A-B620-D33A72DDA5E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Core", "src\BulidingBlocks\Core\ESE.Core\ESE.Core.csproj", "{0D3098D3-3C00-48B2-9292-5F5274476066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Core", "src\BuildingBlocks\Core\ESE.Core\ESE.Core.csproj", "{0D3098D3-3C00-48B2-9292-5F5274476066}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Store.MVC", "src\Presentation\Web\MVC\ESE.Store.MVC\ESE.Store.MVC.csproj", "{D5876E95-A9B7-4E5A-8497-BF1418C7DC64}"
 EndProject
@@ -47,11 +47,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.ShoppingCart.API", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{67C9FD5A-CFB6-4C38-AF76-8AD609973680}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.WebAPI.Core", "src\BulidingBlocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj", "{A5A59D31-3B1A-4D5E-A52C-42890174A0C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.WebAPI.Core", "src\BuildingBlocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj", "{A5A59D31-3B1A-4D5E-A52C-42890174A0C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBus", "MessageBus", "{9E6DF486-A5F1-4070-BAE0-7817293B410D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.MessageBus", "src\BulidingBlocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj", "{86C9026D-E620-403B-821C-613820E3067B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.MessageBus", "src\BuildingBlocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj", "{86C9026D-E620-403B-821C-613820E3067B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.ApiGateways", "4.ApiGateways", "{639C9CD5-BF3E-4C91-AA21-B270B5A5A598}"
 EndProject
@@ -59,9 +59,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Porchases", "Porchases", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Porchase.API", "src\ApiGateways\ESE.Porchase.API\ESE.Porchase.API.csproj", "{7AF8E112-398A-4251-BE45-9563ECC12C41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Order.Domain", "src\Services\Order\ESE.Order.Domain\ESE.Order.Domain.csproj", "{7AB4FFC2-007E-4FFF-B00D-729486EC6781}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Order.Domain", "src\Services\Order\ESE.Order.Domain\ESE.Order.Domain.csproj", "{7AB4FFC2-007E-4FFF-B00D-729486EC6781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESE.Order.Infra", "src\Services\Order\ESE.Order.Infra\ESE.Order.Infra.csproj", "{01B99873-A502-4155-BFF4-41F2EB66340B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESE.Order.Infra", "src\Services\Order\ESE.Order.Infra\ESE.Order.Infra.csproj", "{01B99873-A502-4155-BFF4-41F2EB66340B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

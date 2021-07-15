@@ -5,6 +5,7 @@
     <UserSecretsId>aef4476f-96b7-49dc-ba84-78cd7b0d91bd</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BulidingBlocks\Core\ESE.Core\ESE.Core.csproj" />
-    <ProjectReference Include="..\..\..\BulidingBlocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj" />
-    <ProjectReference Include="..\..\..\BulidingBlocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Core\ESE.Core\ESE.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\MessageBus\ESE.MessageBus\ESE.MessageBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Services\ESE.WebAPI.Core\ESE.WebAPI.Core.csproj" />
     <ProjectReference Include="..\ESE.Order.Domain\ESE.Order.Domain.csproj" />
     <ProjectReference Include="..\ESE.Order.Infra\ESE.Order.Infra.csproj" />
   </ItemGroup>

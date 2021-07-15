@@ -7,7 +7,7 @@ namespace ESE.Order.Domain.Vouchers
 {
     public class Voucher : Entity, IAggregateRoot
     {
-        public string Code { get; private set; }
+        public string VoucherCode { get; private set; } 
         public decimal? Percentage { get; private set; }
         public decimal? TotalDiscount { get; private set; }
         public int Quantity { get; private set; }

@@ -1,7 +1,6 @@
-﻿using ESE.Porchase.API.Extensions;
-using ESE.Porchase.API.Models;
+﻿using ESE.Porchase.API.Models;
 using ESE.Porchase.API.Services.Interfaces;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -12,10 +11,11 @@ namespace ESE.Porchase.API.Services
     public class CatalogService : TextSerializerService, ICatalogService
     {
         private readonly HttpClient _httpClient;
+        private const string URL_KEY = "CatalogUrl";
 
-        public CatalogService(HttpClient httpClient, IOptions<AppSettings> settings)
+        public CatalogService(HttpClient httpClient, IConfiguration configuration)
         {            
-            httpClient.BaseAddress = new Uri("https://localhost:44364");
+            httpClient.BaseAddress = new Uri(configuration[URL_KEY]);
             _httpClient = httpClient;
         }
 
