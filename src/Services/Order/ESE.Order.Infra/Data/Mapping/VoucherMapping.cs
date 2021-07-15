@@ -10,8 +10,9 @@ namespace ESE.Order.Infra.Data.Mapping
         {
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.Code)
+            builder.Property(c => c.VoucherCode)
                 .IsRequired()
+                .HasColumnName("VoucherCode")
                 .HasColumnType("varchar(100)");
 
             builder.Property(c => c.Percentage)                

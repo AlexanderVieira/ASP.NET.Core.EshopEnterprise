@@ -21,7 +21,7 @@ namespace ESE.Order.Infra.Data.Mapping
             builder.HasOne(c => c.Order)
                 .WithMany(c => c.OrderItems);
 
-            builder.ToTable("PedidoItens");
+            builder.ToTable("OrderItems");
         }
     }
 }

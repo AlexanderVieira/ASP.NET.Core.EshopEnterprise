@@ -33,6 +33,8 @@ namespace ESE.Store.MVC.Configuration
 
         public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseForwardedHeaders();
+
             //if (env.IsDevelopment())
             //{
             //    app.UseDeveloperExceptionPage();

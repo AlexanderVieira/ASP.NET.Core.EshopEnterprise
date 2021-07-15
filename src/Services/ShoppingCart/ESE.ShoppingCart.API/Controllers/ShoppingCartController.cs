@@ -23,13 +23,14 @@ namespace ESE.ShoppingCart.API.Controllers
             _context = context;
         }
 
-        [HttpGet("carts")]
+        [HttpGet("cart")]
         public async Task<CustomerCart> GetCart()
         {
-            return await GetCustomerCart() ?? new CustomerCart();
+            var customerCart = await GetCustomerCart() ?? new CustomerCart();
+            return customerCart;
         }
 
-        [HttpPost("cart")]
+        [HttpPost("cart/items/add-item")]
         public async Task<IActionResult> AddItemCart(ItemCart item)
         {
             var cart = await GetCustomerCart();
@@ -51,7 +52,7 @@ namespace ESE.ShoppingCart.API.Controllers
             return CustomResponse();
         }
 
-        [HttpPut("cart/{productId}")]
+        [HttpPut("cart/items/update-item/{productId}")]
         public async Task<IActionResult> UpdateItemCart(Guid productId, ItemCart item)
         {
             var cart = await GetCustomerCart();
@@ -77,7 +78,7 @@ namespace ESE.ShoppingCart.API.Controllers
             return CustomResponse();
         }
 
-        [HttpDelete("cart/{productId}")]
+        [HttpDelete("cart/items/remove-item/{productId}")]
         public async Task<IActionResult> RemoveItemCart(Guid productId)
         {
             var cart = await GetCustomerCart();

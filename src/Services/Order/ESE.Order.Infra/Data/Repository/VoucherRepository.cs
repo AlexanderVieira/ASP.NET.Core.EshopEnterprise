@@ -19,7 +19,7 @@ namespace ESE.Order.Infra.Data.Repository
        
         public async Task<Voucher> GetVoucherByCode(string code)
         {
-            return await _ctx.Vouchers.FirstOrDefaultAsync(v => v.Code == code);
+            return await _ctx.Vouchers.FirstOrDefaultAsync(v => v.VoucherCode == code);
         }
 
         public void Update(Voucher voucher)

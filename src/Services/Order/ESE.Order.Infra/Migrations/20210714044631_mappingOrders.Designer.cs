@@ -4,14 +4,16 @@ using ESE.Order.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ESE.Order.Infra.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    partial class OrderContextModelSnapshot : ModelSnapshot
+    [Migration("20210714044631_mappingOrders")]
+    partial class mappingOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +129,7 @@ namespace ESE.Order.Infra.Migrations
 
                     b.Property<string>("VoucherCode")
                         .IsRequired()
-                        .HasColumnName("VoucherCode")
+                        .HasColumnName("Code")
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");

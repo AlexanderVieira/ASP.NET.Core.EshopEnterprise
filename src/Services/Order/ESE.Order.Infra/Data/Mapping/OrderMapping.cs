@@ -12,25 +12,25 @@ namespace ESE.Order.Infra.Data.Mapping
             builder.OwnsOne(p => p.Address, e =>
             {
                 e.Property(pe => pe.Street)
-                    .HasColumnName("Logradouro");
+                    .HasColumnName("Street");
 
                 e.Property(pe => pe.Number)
-                    .HasColumnName("Numero");
+                    .HasColumnName("Number");
 
                 e.Property(pe => pe.Complement)
-                    .HasColumnName("Complemento");
+                    .HasColumnName("Complement");
 
                 e.Property(pe => pe.District)
-                    .HasColumnName("Bairro");
+                    .HasColumnName("District");
 
                 e.Property(pe => pe.CodePostal)
-                    .HasColumnName("Cep");
+                    .HasColumnName("CodePostal");
 
                 e.Property(pe => pe.City)
-                    .HasColumnName("Cidade");
+                    .HasColumnName("City");
 
                 e.Property(pe => pe.State)
-                    .HasColumnName("Estado");
+                    .HasColumnName("State");
             });
 
             builder.Property(c => c.Discount)
@@ -40,6 +40,7 @@ namespace ESE.Order.Infra.Data.Mapping
                 .HasColumnType("decimal(18,2)");
 
             builder.Property(c => c.Code)
+                .HasColumnName("Code")
                 .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
 
             // 1 : N => Pedido : PedidoItems
@@ -47,7 +48,7 @@ namespace ESE.Order.Infra.Data.Mapping
                 .WithOne(c => c.Order)
                 .HasForeignKey(c => c.OrderId);
 
-            builder.ToTable("Pedidos");
+            builder.ToTable("Orders");
         }
     }
 }

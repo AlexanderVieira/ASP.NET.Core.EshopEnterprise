@@ -37,7 +37,7 @@ namespace ESE.Store.MVC.Services
         public async Task<ResponseResult> AddItemCart(ItemCartViewModel item)
         {
             var itemContent = GetContent(item);
-            var response = await _httpClient.PostAsync("/porchases/cart/items", itemContent);
+            var response = await _httpClient.PostAsync("/porchases/cart/items/add-item/", itemContent);
             if (!HandlerResponseErrors(response))
             {
                 return await DeserializeResponseObject<ResponseResult>(response);
@@ -48,7 +48,7 @@ namespace ESE.Store.MVC.Services
 
         public async Task<ResponseResult> RemoveItemCart(Guid productId)
         {
-            var response = await _httpClient.DeleteAsync($"/porchases/cart/items/{productId}");
+            var response = await _httpClient.DeleteAsync($"/porchases/cart/items/remove-item/{productId}");
             if (!HandlerResponseErrors(response))
             {
                 return await DeserializeResponseObject<ResponseResult>(response);
@@ -60,7 +60,7 @@ namespace ESE.Store.MVC.Services
         public async Task<ResponseResult> UpdateItemCart(Guid productId, ItemCartViewModel item)
         {
             var itemContent = GetContent(item);
-            var response = await _httpClient.PutAsync($"/porchases/cart/items/{item.ProductId}", itemContent);
+            var response = await _httpClient.PutAsync($"/porchases/cart/items/update-item/{item.ProductId}", itemContent);
             if (!HandlerResponseErrors(response))
             {
                 return await DeserializeResponseObject<ResponseResult>(response);
