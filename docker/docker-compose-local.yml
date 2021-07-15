@@ -7,14 +7,11 @@ networks:
 services: 
     
     ese-rabbitmq:
-        image: avs/eshopstore-rabbitmq:latest
+        image: rabbitmq:3-management
         container_name: eshopstore-rabbitmq
         hostname: eshopstore-rabbitmq
         networks:
           - backend
-        build: 
-          context: ../docker
-          dockerfile: ./rabbitmq/Dockerfile
         restart: always
         ports:
           - "15672:15672"
@@ -28,15 +25,12 @@ services:
             RABBITMQ_DEFAULT_VHOST: "/"
         
     ese-mssqlserver:                    
-        image: avs/eshopstore-mssqlserver:2017-latest-ubuntu
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
         container_name: eshopstore-mssqlserver
         hostname: eshopstore-mssqlserver         
         command: /bin/bash ./entrypoint.sh
         networks:
           - backend
-        build: 
-          context: ../docker
-          dockerfile: ./sql/db/mssql/Dockerfile
         ports:
           - 1433:1433
         restart: always
@@ -48,7 +42,20 @@ services:
           - dbdata:/var/opt/mssql/data
           - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
           - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
-          - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
+          - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql
+
+    # ese-mysql:
+    #     image: "mysql:5.7.31"
+    #     container_name: eshopstore-mysql
+    #     hostname: eshopstore-mysql                
+    #     volumes:
+    #       - datasource:/var/lib/mysql
+    #       - ./_MySql_Init_Script:/docker-entrypoint-initdb.d
+    #     networks:
+    #       - backend
+    #     environment:
+    #       - MYSQL_ROOT_PASSWORD=root
+    #       - bind-address=0.0.0.0
             
     ese-api-auth:
         image: avs/eshopstore-api-auth:latest
