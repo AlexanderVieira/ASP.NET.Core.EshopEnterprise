@@ -67,7 +67,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro       
-        depends_on:
+        links:
             - ese-rabbitmq
             - ese-mssqlserver
             
@@ -88,7 +88,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        depends_on:
+        links:
             - ese-rabbitmq
             - ese-mssqlserver
 
@@ -109,7 +109,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        depends_on:
+        links:
             - ese-rabbitmq
             - ese-api-auth
             - ese-mssqlserver
@@ -131,7 +131,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        depends_on:
+        links:
             - ese-rabbitmq
             - ese-api-auth
             - ese-mssqlserver 
@@ -153,7 +153,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        depends_on:
+        links:
             - ese-rabbitmq            
             - ese-api-auth
             - ese-mssqlserver
@@ -175,7 +175,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
         volumes:
             - ./certs:/https:ro           
-        depends_on:
+        links:
             - ese-rabbitmq
             - ese-api-auth
             - ese-api-catalog
@@ -199,7 +199,7 @@ services:
             - ASPNETCORE_URLS=http://*:5001
         volumes: 
             - dpkeys:/var/data_protection_keys/    
-        depends_on:
+        links:
             - ese-api-catalog
 
     ese-nginx:
@@ -215,7 +215,7 @@ services:
         ports:
             - "80:80"
             - "443:443"
-        depends_on:
+        links:
             - ese-web-mvc    
 volumes:
     dpkeys:
