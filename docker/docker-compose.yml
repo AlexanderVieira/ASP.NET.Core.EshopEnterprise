@@ -27,28 +27,28 @@ services:
             RABBITMQ_DEFAULT_PASS: "eshop"
             RABBITMQ_DEFAULT_VHOST: "/"
         
-#     ese-mssqlserver:                    
-#         image: eshopstore-mssqlserver:latest
-#         container_name: eshopstore-mssqlserver
-#         hostname: eshopstore-mssqlserver         
-#         command: /bin/bash ./entrypoint.sh
-#         networks:
-#           - backend
-#         build: 
-#           context: ../docker
-#           dockerfile: ./sql/db/mssql/Dockerfile
-#         ports:
-#           - "1433:1433"
-#         restart: always
-#         environment:
-#           - ACCEPT_EULA=Y
-#           - MSSQL_PID=Express
-#           - SA_PASSWORD=MeuDB@123
-#         volumes:
-#           - dbdata:/var/opt/mssql/data
-#           - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
-#           - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
-#           - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
+    ese-mssqlserver:                    
+        image: eshopstore-mssqlserver:latest
+        container_name: eshopstore-mssqlserver
+        hostname: eshopstore-mssqlserver         
+        command: /bin/bash ./entrypoint.sh
+        networks:
+          - backend
+        build: 
+          context: ../docker
+          dockerfile: ./sql/db/mssql/Dockerfile
+        ports:
+          - "1433:1433"
+        restart: always
+        environment:
+          - ACCEPT_EULA=Y
+          - MSSQL_PID=Express
+          - SA_PASSWORD=MeuDB@123
+        volumes:
+          - dbdata:/var/opt/mssql/data
+          - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
+          - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
+          - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
             
 #     ese-api-auth:
 #         image: eshopstore-api-auth:latest
@@ -217,6 +217,6 @@ services:
 #             - "443:443"
 #         depends_on:
 #             - ese-web-mvc    
-# volumes:
-#     dpkeys:
-#     dbdata: 
+volumes:
+#    dpkeys:
+    dbdata: 
