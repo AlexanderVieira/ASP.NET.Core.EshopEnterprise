@@ -16,7 +16,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:44395;http://localhost:5300"
+      "applicationUrl": "https://localhost:44395;http://localhost:5401"
     },
     "IIS - Staging": {
       "commandName": "IISExpress",
@@ -41,7 +41,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development.Local"
       },
-      "applicationUrl": "https://localhost:44395;http://localhost:5300"
+      "applicationUrl": "https://localhost:44395;http://localhost:5401"
     },
     "Docker": {
       "commandName": "Docker",
