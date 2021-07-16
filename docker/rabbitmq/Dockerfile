@@ -1,5 +1,4 @@
 FROM rabbitmq:3.8
-
 RUN set eux; \
 	rabbitmq-plugins enable --offline rabbitmq_management; \
 	rm -f /etc/rabbitmq/conf.d/management_agent.disable_metrics_collector.conf; \
