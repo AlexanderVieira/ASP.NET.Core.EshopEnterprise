@@ -17,206 +17,206 @@ services:
           dockerfile: ./rabbitmq/Dockerfile
         restart: always
         ports:
-          - "15672:15672"
-          - "25672:25672"
-          - "5671:5671"
-          - "5672:5672"
+          - "15672:80"
+          - "25672:80"
+          - "5671:80"
+          - "5672:80"
         environment:
             RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
             RABBITMQ_DEFAULT_USER: "eshop"
             RABBITMQ_DEFAULT_PASS: "eshop"
             RABBITMQ_DEFAULT_VHOST: "/"
         
-    ese-mssqlserver:                    
-        image: eshopstore-mssqlserver:latest
-        container_name: eshopstore-mssqlserver
-        hostname: eshopstore-mssqlserver         
-        command: /bin/bash ./entrypoint.sh
-        networks:
-          - backend
-        build: 
-          context: ../docker
-          dockerfile: ./sql/db/mssql/Dockerfile
-        ports:
-          - "1433:1433"
-        restart: always
-        environment:
-          - ACCEPT_EULA=Y
-          - MSSQL_PID=Express
-          - SA_PASSWORD=MeuDB@123
-        volumes:
-          - dbdata:/var/opt/mssql/data
-          - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
-          - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
-          - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
+#     ese-mssqlserver:                    
+#         image: eshopstore-mssqlserver:latest
+#         container_name: eshopstore-mssqlserver
+#         hostname: eshopstore-mssqlserver         
+#         command: /bin/bash ./entrypoint.sh
+#         networks:
+#           - backend
+#         build: 
+#           context: ../docker
+#           dockerfile: ./sql/db/mssql/Dockerfile
+#         ports:
+#           - "1433:1433"
+#         restart: always
+#         environment:
+#           - ACCEPT_EULA=Y
+#           - MSSQL_PID=Express
+#           - SA_PASSWORD=MeuDB@123
+#         volumes:
+#           - dbdata:/var/opt/mssql/data
+#           - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
+#           - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
+#           - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
             
-    ese-api-auth:
-        image: eshopstore-api-auth:latest
-        container_name: eshopstore-api-auth
-        hostname: eshopstore-api-auth
-        networks:
-            - backend    
-        build: 
-            context: ../src
-            dockerfile: ./Services/Auth/ESE.Auth.API/Dockerfile
-        restart: always    
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5101;http://+5102
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
-        volumes:
-            - ./certs:/https:ro       
-        depends_on:
-            - ese-rabbitmq
-            - ese-mssqlserver
+#     ese-api-auth:
+#         image: eshopstore-api-auth:latest
+#         container_name: eshopstore-api-auth
+#         hostname: eshopstore-api-auth
+#         networks:
+#             - backend    
+#         build: 
+#             context: ../src
+#             dockerfile: ./Services/Auth/ESE.Auth.API/Dockerfile
+#         restart: always    
+#         environment: 
+#             - ASPNETCORE_ENVIRONMENT=Production
+#             - ASPNETCORE_URLS=https://+:5101;http://+5102
+#             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+#         volumes:
+#             - ./certs:/https:ro       
+#         depends_on:
+#             - ese-rabbitmq
+#             - ese-mssqlserver
             
-    ese-api-catalog:
-        image: eshopstore-api-catalog:latest
-        container_name: eshopstore-api-catalog
-        hostname: eshopstore-api-catalog
-        networks:
-            - backend
-        build: 
-            context: ../src
-            dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
-        restart: always 
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5301;http://+5302 
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
-        volumes:
-            - ./certs:/https:ro           
-        depends_on:
-            - ese-rabbitmq
-            - ese-mssqlserver
+#     ese-api-catalog:
+#         image: eshopstore-api-catalog:latest
+#         container_name: eshopstore-api-catalog
+#         hostname: eshopstore-api-catalog
+#         networks:
+#             - backend
+#         build: 
+#             context: ../src
+#             dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
+#         restart: always 
+#         environment: 
+#             - ASPNETCORE_ENVIRONMENT=Production
+#             - ASPNETCORE_URLS=https://+:5301;http://+5302 
+#             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+#         volumes:
+#             - ./certs:/https:ro           
+#         depends_on:
+#             - ese-rabbitmq
+#             - ese-mssqlserver
 
-    ese-api-client:
-        image: eshopstore-api-client:latest
-        container_name: eshopstore-api-client
-        hostname: eshopstore-api-client
-        networks:
-            - backend    
-        build: 
-            context: ../src
-            dockerfile: ./Services/Client/ESE.Client.API/Dockerfile
-        restart: always 
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5401;http://+5402 
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
-        volumes:
-            - ./certs:/https:ro           
-        depends_on:
-            - ese-rabbitmq
-            - ese-api-auth
-            - ese-mssqlserver
+#     ese-api-client:
+#         image: eshopstore-api-client:latest
+#         container_name: eshopstore-api-client
+#         hostname: eshopstore-api-client
+#         networks:
+#             - backend    
+#         build: 
+#             context: ../src
+#             dockerfile: ./Services/Client/ESE.Client.API/Dockerfile
+#         restart: always 
+#         environment: 
+#             - ASPNETCORE_ENVIRONMENT=Production
+#             - ASPNETCORE_URLS=https://+:5401;http://+5402 
+#             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+#         volumes:
+#             - ./certs:/https:ro           
+#         depends_on:
+#             - ese-rabbitmq
+#             - ese-api-auth
+#             - ese-mssqlserver
             
-    ese-api-shoppingcart:
-        image: eshopstore-api-shoppingcart:latest
-        container_name: eshopstore-api-shoppingcart
-        hostname: eshopstore-api-shoppingcart
-        networks:
-            - backend 
-        build: 
-            context: ../src
-            dockerfile: ./Services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
-        restart: always             
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5201;http://+5202 
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
-        volumes:
-            - ./certs:/https:ro           
-        depends_on:
-            - ese-rabbitmq
-            - ese-api-auth
-            - ese-mssqlserver 
+#     ese-api-shoppingcart:
+#         image: eshopstore-api-shoppingcart:latest
+#         container_name: eshopstore-api-shoppingcart
+#         hostname: eshopstore-api-shoppingcart
+#         networks:
+#             - backend 
+#         build: 
+#             context: ../src
+#             dockerfile: ./Services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
+#         restart: always             
+#         environment: 
+#             - ASPNETCORE_ENVIRONMENT=Production
+#             - ASPNETCORE_URLS=https://+:5201;http://+5202 
+#             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+#         volumes:
+#             - ./certs:/https:ro           
+#         depends_on:
+#             - ese-rabbitmq
+#             - ese-api-auth
+#             - ese-mssqlserver 
 
-    ese-api-order:
-        image: eshopstore-api-order:latest
-        container_name: eshopstore-api-order 
-        hostname: eshopstore-api-order
-        networks:
-            - backend   
-        build: 
-            context: ../src
-            dockerfile: ./Services/Order/ESE.Order.API/Dockerfile 
-        restart: always             
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5701;http://+5702 
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
-        volumes:
-            - ./certs:/https:ro           
-        depends_on:
-            - ese-rabbitmq            
-            - ese-api-auth
-            - ese-mssqlserver
+#     ese-api-order:
+#         image: eshopstore-api-order:latest
+#         container_name: eshopstore-api-order 
+#         hostname: eshopstore-api-order
+#         networks:
+#             - backend   
+#         build: 
+#             context: ../src
+#             dockerfile: ./Services/Order/ESE.Order.API/Dockerfile 
+#         restart: always             
+#         environment: 
+#             - ASPNETCORE_ENVIRONMENT=Production
+#             - ASPNETCORE_URLS=https://+:5701;http://+5702 
+#             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+#         volumes:
+#             - ./certs:/https:ro           
+#         depends_on:
+#             - ese-rabbitmq            
+#             - ese-api-auth
+#             - ese-mssqlserver
 
-    ese-api-bff-porchases:
-        image: eshopstore-api-bff-porchases:latest
-        container_name: eshopstore-api-bff-porchases
-        hostname: eshopstore-api-bff-porchases
-        networks:
-            - backend 
-        build: 
-            context: ../src
-            dockerfile: ./ApiGateways/ESE.Porchase.API/Dockerfile  
-        restart: always 
-        environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5501;http://+5502 
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
-        volumes:
-            - ./certs:/https:ro           
-        depends_on:
-            - ese-rabbitmq
-            - ese-api-auth
-            - ese-api-catalog
-            - ese-api-client
-            - ese-api-shoppingcart
-            #- ese-api-payment
-            - ese-api-order
+#     ese-api-bff-porchases:
+#         image: eshopstore-api-bff-porchases:latest
+#         container_name: eshopstore-api-bff-porchases
+#         hostname: eshopstore-api-bff-porchases
+#         networks:
+#             - backend 
+#         build: 
+#             context: ../src
+#             dockerfile: ./ApiGateways/ESE.Porchase.API/Dockerfile  
+#         restart: always 
+#         environment: 
+#             - ASPNETCORE_ENVIRONMENT=Production
+#             - ASPNETCORE_URLS=https://+:5501;http://+5502 
+#             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+#         volumes:
+#             - ./certs:/https:ro           
+#         depends_on:
+#             - ese-rabbitmq
+#             - ese-api-auth
+#             - ese-api-catalog
+#             - ese-api-client
+#             - ese-api-shoppingcart
+#             #- ese-api-payment
+#             - ese-api-order
     
-    ese-web-mvc:
-        image: eshopstore-web-mvc:latest
-        container_name: eshopstore-web-mvc
-        hostname: eshopstore-web-mvc
-        networks:
-            - backend           
-        build:
-            context: ../src
-            dockerfile: ./Presentation/Web/MVC/ESE.Store.MVC/Dockerfile
-        restart: always              
-        environment:
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=http://*:5001
-        volumes: 
-            - dpkeys:/var/data_protection_keys/    
-        depends_on:
-            - ese-api-catalog
+#     ese-web-mvc:
+#         image: eshopstore-web-mvc:latest
+#         container_name: eshopstore-web-mvc
+#         hostname: eshopstore-web-mvc
+#         networks:
+#             - backend           
+#         build:
+#             context: ../src
+#             dockerfile: ./Presentation/Web/MVC/ESE.Store.MVC/Dockerfile
+#         restart: always              
+#         environment:
+#             - ASPNETCORE_ENVIRONMENT=Production
+#             - ASPNETCORE_URLS=http://*:5001
+#         volumes: 
+#             - dpkeys:/var/data_protection_keys/    
+#         depends_on:
+#             - ese-api-catalog
 
-    ese-nginx:
-        image: eshopstore-nginx:latest
-        container_name: eshopstore-nginx
-        hostname: eshopstore-nginx
-        networks:
-            - backend     
-        build: 
-            context: ../docker
-            dockerfile: ./nginx/Dockerfile 
-        restart: always 
-        ports:
-            - "80:80"
-            - "443:443"
-        depends_on:
-            - ese-web-mvc    
-volumes:
-    dpkeys:
-    dbdata: 
+#     ese-nginx:
+#         image: eshopstore-nginx:latest
+#         container_name: eshopstore-nginx
+#         hostname: eshopstore-nginx
+#         networks:
+#             - backend     
+#         build: 
+#             context: ../docker
+#             dockerfile: ./nginx/Dockerfile 
+#         restart: always 
+#         ports:
+#             - "80:80"
+#             - "443:443"
+#         depends_on:
+#             - ese-web-mvc    
+# volumes:
+#     dpkeys:
+#     dbdata: 
