@@ -16,39 +16,39 @@ services:
           context: ../docker
           dockerfile: ./rabbitmq/Dockerfile
         restart: always
-        ports:
-          - "15672:80"
-          - "25672:80"
-          - "5671:80"
-          - "5672:80"
+        # ports:
+        #   - "15672:80"
+        #   - "25672:80"
+        #   - "5671:80"
+        #   - "5672:80"
         environment:
             RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
             RABBITMQ_DEFAULT_USER: "eshop"
             RABBITMQ_DEFAULT_PASS: "eshop"
             RABBITMQ_DEFAULT_VHOST: "/"
         
-    ese-mssqlserver:                    
-        image: eshopstore-mssqlserver:latest
-        container_name: eshopstore-mssqlserver
-        hostname: eshopstore-mssqlserver         
-        command: /bin/bash ./entrypoint.sh
-        networks:
-          - backend
-        build: 
-          context: ../docker
-          dockerfile: ./sql/db/mssql/Dockerfile
-        ports:
-          - "1433:1433"
-        restart: always
-        environment:
-          - ACCEPT_EULA=Y
-          - MSSQL_PID=Express
-          - SA_PASSWORD=MeuDB@123
-        volumes:
-          - dbdata:/var/opt/mssql/data
-          - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
-          - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
-          - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
+    # ese-mssqlserver:                    
+    #     image: eshopstore-mssqlserver:latest
+    #     container_name: eshopstore-mssqlserver
+    #     hostname: eshopstore-mssqlserver         
+    #     command: /bin/bash ./entrypoint.sh
+    #     networks:
+    #       - backend
+    #     build: 
+    #       context: ../docker
+    #       dockerfile: ./sql/db/mssql/Dockerfile
+    #     ports:
+    #       - "1433:1433"
+    #     restart: always
+    #     environment:
+    #       - ACCEPT_EULA=Y
+    #       - MSSQL_PID=Express
+    #       - SA_PASSWORD=MeuDB@123
+    #     volumes:
+    #       - dbdata:/var/opt/mssql/data
+    #       - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
+    #       - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
+    #       - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql    
             
 #     ese-api-auth:
 #         image: eshopstore-api-auth:latest
@@ -71,26 +71,26 @@ services:
 #             - ese-rabbitmq
 #             - ese-mssqlserver
             
-#     ese-api-catalog:
-#         image: eshopstore-api-catalog:latest
-#         container_name: eshopstore-api-catalog
-#         hostname: eshopstore-api-catalog
-#         networks:
-#             - backend
-#         build: 
-#             context: ../src
-#             dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
-#         restart: always 
-#         environment: 
-#             - ASPNETCORE_ENVIRONMENT=Production
-#             - ASPNETCORE_URLS=https://+:5301;http://+5302 
-#             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
-#         volumes:
-#             - ./certs:/https:ro           
-#         depends_on:
-#             - ese-rabbitmq
-#             - ese-mssqlserver
+    ese-api-catalog:
+        image: eshopstore-api-catalog:latest
+        container_name: eshopstore-api-catalog
+        hostname: eshopstore-api-catalog
+        networks:
+            - backend
+        build: 
+            context: ../src
+            dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5301;http://+5302 
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro           
+        depends_on:
+            - ese-rabbitmq
+        #    - ese-mssqlserver
 
 #     ese-api-client:
 #         image: eshopstore-api-client:latest
@@ -217,6 +217,6 @@ services:
 #             - "443:443"
 #         depends_on:
 #             - ese-web-mvc    
-volumes:
-#    dpkeys:
-    dbdata: 
+# volumes:
+#     dpkeys:
+#     dbdata: 
