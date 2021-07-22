@@ -20,7 +20,8 @@ namespace ESE.Auth.API.Configuration
                 .PersistKeysToDatabaseStore<AuthDbContext>();
 
             services.AddDbContext<AuthDbContext>(options => 
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), 
+                                     providerOptions => providerOptions.EnableRetryOnFailure()));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()

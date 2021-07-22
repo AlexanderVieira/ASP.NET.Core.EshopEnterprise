@@ -14,7 +14,8 @@ namespace ESE.Order.API.Configuration
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<OrderContext>(opt =>
-                opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                                 providerOptions => providerOptions.EnableRetryOnFailure()));
 
             services.AddControllers();
 
