@@ -7,11 +7,14 @@ networks:
 services: 
     
     ese-rabbitmq:
-        image: rabbitmq:3-management
+        image: eshopstore-rabbitmq:latest
         container_name: eshopstore-rabbitmq
         hostname: eshopstore-rabbitmq
         networks:
           - backend
+        build: 
+         context: ../docker
+         dockerfile: ./rabbitmq/Dockerfile
         restart: always
         ports:
           - "15672:15672"
@@ -25,12 +28,14 @@ services:
             RABBITMQ_DEFAULT_VHOST: "/"
         
     ese-mssqlserver:                    
-        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+        image: avs/eshopstore-mssqlserver:latest
         container_name: eshopstore-mssqlserver
-        hostname: eshopstore-mssqlserver         
-        command: /bin/bash ./entrypoint.sh
+        hostname: eshopstore-mssqlserver
         networks:
           - backend
+        build: 
+          context: ../docker
+          dockerfile: ./sql/db/mssql/Dockerfile
         ports:
           - 1433:1433
         restart: always
@@ -40,9 +45,10 @@ services:
           - SA_PASSWORD=MeuDB@123
         volumes:
           - dbdata:/var/opt/mssql/data
-          - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
-          - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
-          - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql
+        #  - ./sql/db/mssql/docker-entrypoint.sh:/entrypoint.sh
+        #  - ./sql/db/mssql/docker-db-init.sh:/db-init.sh
+        #  - ./sql/db/mssql/criacao-banco-docker.sql:/db-init.sql
+        #command: /bin/bash ./entrypoint.sh
 
     # ese-mysql:
     #     image: "mysql:5.7.31"
@@ -68,7 +74,7 @@ services:
             dockerfile: ./Services/Auth/ESE.Auth.API/Dockerfile
         restart: always    
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
             - ASPNETCORE_URLS=https://+:5101;http://+5102
             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
@@ -89,7 +95,7 @@ services:
             dockerfile: ./Services/Catalog/ESE.Catalog.API/Dockerfile  
         restart: always 
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
             - ASPNETCORE_URLS=https://+:5301;http://+5302 
             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
@@ -110,7 +116,7 @@ services:
             dockerfile: ./Services/Client/ESE.Client.API/Dockerfile
         restart: always 
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
             - ASPNETCORE_URLS=https://+:5401;http://+5402 
             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
@@ -132,7 +138,7 @@ services:
             dockerfile: ./Services/ShoppingCart/ESE.ShoppingCart.API/Dockerfile      
         restart: always             
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
             - ASPNETCORE_URLS=https://+:5201;http://+5202 
             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
@@ -154,7 +160,7 @@ services:
             dockerfile: ./Services/Order/ESE.Order.API/Dockerfile 
         restart: always             
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
             - ASPNETCORE_URLS=https://+:5701;http://+5702 
             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
@@ -176,7 +182,7 @@ services:
             dockerfile: ./ApiGateways/ESE.Porchase.API/Dockerfile  
         restart: always 
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
             - ASPNETCORE_URLS=https://+:5501;http://+5502 
             - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/eshopstore-certificate.pfx
@@ -202,7 +208,7 @@ services:
             dockerfile: ./Presentation/Web/MVC/ESE.Store.MVC/Dockerfile
         restart: always              
         environment:
-            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_ENVIRONMENT=Staging
             - ASPNETCORE_URLS=http://*:5001
         volumes: 
             - dpkeys:/var/data_protection_keys/    
